@@ -1,0 +1,16 @@
+﻿Build started 2018-01-29 21:26:38.
+     1>Project "D:\git\Computer-Graphics\opengl-tutorial\bin-vc12\external\GLEW_1130.vcxproj" on node 3 (Build target(s)).
+     1>CustomBuild:
+         Building Custom Rule D:/git/Computer-Graphics/opengl-tutorial/ogl-master/external/CMakeLists.txt
+         CMake does not need to re-run because D:/git/Computer-Graphics/opengl-tutorial/bin-vc12/external/CMakeFiles/generate.stamp is up-to-date.
+       ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\glfw-3.1.2\include\GLFW" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\glew-1.13.0\include" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\AntTweakBar-1.16\include" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BoostWorkaround" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\bullet-2.81-rev2613\src" /Zi /nologo /W3 /WX- /MP /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D TW_STATIC /D TW_NO_LIB_PRAGMA /D TW_NO_DIRECT3D /D GLEW_STATIC /D _CRT_SECURE_NO_WARNINGS /D ASSIMP_BUILD_BOOST_WORKAROUND /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"GLEW_1130.dir\Debug\\" /Fd"GLEW_1130.dir\Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\glew-1.13.0\src\glew.c"
+         glew.c
+       Lib:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\git\Computer-Graphics\opengl-tutorial\bin-vc12\external\Debug\GLEW_1130.lib" /NOLOGO  /machine:X86 GLEW_1130.dir\Debug\glew.obj
+         GLEW_1130.vcxproj -> D:\git\Computer-Graphics\opengl-tutorial\bin-vc12\external\Debug\GLEW_1130.lib
+     1>Done Building Project "D:\git\Computer-Graphics\opengl-tutorial\bin-vc12\external\GLEW_1130.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.86

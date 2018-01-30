@@ -1,0 +1,441 @@
+﻿Build started 2018-01-29 21:26:40.
+     1>Project "D:\git\Computer-Graphics\opengl-tutorial\bin-vc12\external\assimp-3.0.1270\code\assimp.vcxproj" on node 3 (Build target(s)).
+     1>CustomBuild:
+         Building Custom Rule D:/git/Computer-Graphics/opengl-tutorial/ogl-master/external/assimp-3.0.1270/code/CMakeLists.txt
+         CMake does not need to re-run because D:/git/Computer-Graphics/opengl-tutorial/bin-vc12/external/assimp-3.0.1270/code/CMakeFiles/generate.stamp is up-to-date.
+       ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\glfw-3.1.2\include\GLFW" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\glew-1.13.0\include" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\AntTweakBar-1.16\include" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BoostWorkaround" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\..\contrib\unzip" /Zi /nologo /W3 /WX- /MP /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D TW_STATIC /D TW_NO_LIB_PRAGMA /D TW_NO_DIRECT3D /D GLEW_STATIC /D _CRT_SECURE_NO_WARNINGS /D ASSIMP_BUILD_BOOST_WORKAROUND /D ASSIMP_BUILD_DLL_EXPORT /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"assimp.dir\Debug\\" /Fd"assimp.dir\Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Assimp.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\AssimpPCH.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BaseImporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BaseProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\PostStepRegistry.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ImporterRegistry.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\DefaultIOStream.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\DefaultIOSystem.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Importer.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SGSpatialSort.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\VertexTriangleAdjacency.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SpatialSort.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SceneCombiner.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ScenePreprocessor.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SkeletonMeshBuilder.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SplitByBoneCountProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\StandardShapes.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\TargetAnimation.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\RemoveComments.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Subdivision.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\DefaultLogger.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Exporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\AssimpCExport.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\CalcTangentsProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ComputeUVMappingProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ConvertToLHProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\FindDegenerates.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\FindInstancesProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\FindInvalidDataProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\FixNormalsStep.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\GenFaceNormalsProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\GenVertexNormalsProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\PretransformVertices.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ImproveCacheLocality.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\JoinVerticesProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LimitBoneWeightsProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\RemoveRedundantMaterials.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\RemoveVCProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SortByPTypeProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SplitLargeMeshes.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\TerragenLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\TextureTransform.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\TriangulateProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ValidateDataStructure.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\OptimizeGraph.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\OptimizeMeshes.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\DeboneProcess.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ProcessHelper.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MakeVerboseFormat.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\3DSConverter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\3DSLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ACLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ASELoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ASEParser.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\B3DImporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BVHLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ColladaLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ColladaParser.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ColladaExporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\DXFLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\CSMLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\HMPLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IRRLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IRRMeshLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IRRShared.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LWOAnimation.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LWOBLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LWOLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LWOMaterial.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LWSLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\M3Importer.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MD2Loader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MD3Loader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MD5Loader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MD5Parser.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MDCLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MDLLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MDLMaterialLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MaterialSystem.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\NFFLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\OFFLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ObjFileImporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ObjFileMtlImporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ObjFileParser.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ObjExporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\OgreImporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\OgreMaterial.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\OgreMesh.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\OgreSkeleton.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\PlyLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\PlyParser.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\PlyExporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Q3DLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Q3BSPFileParser.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Q3BSPFileImporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Q3BSPZipArchive.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\RawLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SMDLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\STLLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\STLExporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\UnrealLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\XFileImporter.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\XFileParser.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\MS3DLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\COBLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderDNA.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderScene.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderModifier.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\NDOLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCReaderGen.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCUtil.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCGeometry.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCMaterial.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCProfile.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCCurve.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\STEPFileReader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\XGLLoader.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\irrXML\irrXML.cpp" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\poly2tri\poly2tri\common\shapes.cc" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\poly2tri\poly2tri\sweep\advancing_front.cc" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\poly2tri\poly2tri\sweep\cdt.cc" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\poly2tri\poly2tri\sweep\sweep.cc" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\poly2tri\poly2tri\sweep\sweep_context.cc" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\clipper\clipper.cpp"
+         Assimp.cpp
+         AssimpPCH.cpp
+         BaseImporter.cpp
+         BaseProcess.cpp
+         PostStepRegistry.cpp
+         ImporterRegistry.cpp
+         DefaultIOStream.cpp
+         DefaultIOSystem.cpp
+         Importer.cpp
+         SGSpatialSort.cpp
+         VertexTriangleAdjacency.cpp
+         SpatialSort.cpp
+         SceneCombiner.cpp
+         ScenePreprocessor.cpp
+         SkeletonMeshBuilder.cpp
+         SplitByBoneCountProcess.cpp
+         StandardShapes.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SkeletonMeshBuilder.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SkeletonMeshBuilder.cpp(212) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiVector3t<float>>>>,aiVector3D*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiVector3D *
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiVector3t<float>>>>
+                 ]
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+         TargetAnimation.cpp
+         RemoveComments.cpp
+         Subdivision.cpp
+         DefaultLogger.cpp
+         Exporter.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SplitByBoneCountProcess.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\SplitByBoneCountProcess.cpp(140) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>,aiMesh**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiMesh **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>
+                 ]
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+         AssimpCExport.cpp
+         CalcTangentsProcess.cpp
+         ComputeUVMappingProcess.cpp
+         ConvertToLHProcess.cpp
+         FindDegenerates.cpp
+         FindInstancesProcess.cpp
+         FindInvalidDataProcess.cpp
+         FixNormalsStep.cpp
+         GenFaceNormalsProcess.cpp
+         GenVertexNormalsProcess.cpp
+         PretransformVertices.cpp
+         ImproveCacheLocality.cpp
+         JoinVerticesProcess.cpp
+         LimitBoneWeightsProcess.cpp
+         RemoveRedundantMaterials.cpp
+         RemoveVCProcess.cpp
+         SortByPTypeProcess.cpp
+         SplitLargeMeshes.cpp
+         TerragenLoader.cpp
+         TextureTransform.cpp
+         TriangulateProcess.cpp
+         ValidateDataStructure.cpp
+         OptimizeGraph.cpp
+         OptimizeMeshes.cpp
+         DeboneProcess.cpp
+         ProcessHelper.cpp
+         MakeVerboseFormat.cpp
+         3DSConverter.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\OptimizeMeshes.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\OptimizeMeshes.cpp(139) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>,aiMesh**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiMesh **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>
+                 ]
+         3DSLoader.cpp
+         ACLoader.cpp
+         ASELoader.cpp
+         ASEParser.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\DeboneProcess.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\DeboneProcess.cpp(167) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>,aiMesh**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiMesh **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>
+                 ]
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+         B3DImporter.cpp
+         BVHLoader.cpp
+         ColladaLoader.cpp
+         ColladaParser.cpp
+         ColladaExporter.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BVHLoader.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BVHLoader.cpp(224) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiNode *>>>,aiNode**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiNode **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiNode *>>>
+                 ]
+         DXFLoader.cpp
+         CSMLoader.cpp
+         HMPLoader.cpp
+         IRRLoader.cpp
+         IRRMeshLoader.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ColladaLoader.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\ColladaLoader.cpp(516) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<unsigned int>>>,unsigned int*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=unsigned int *
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<unsigned int>>>
+                 ]
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+         IRRShared.cpp
+         LWOAnimation.cpp
+         LWOBLoader.cpp
+         LWOLoader.cpp
+         LWOMaterial.cpp
+         LWSLoader.cpp
+         M3Importer.cpp
+         MD2Loader.cpp
+         MD3Loader.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LWOAnimation.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LWOAnimation.cpp(558) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiVectorKey>>>,aiVectorKey*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiVectorKey *
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiVectorKey>>>
+                 ]
+         MD5Loader.cpp
+         MD5Parser.cpp
+         MDCLoader.cpp
+         MDLLoader.cpp
+         MDLMaterialLoader.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LWSLoader.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\LWSLoader.cpp(891) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiNodeAnim *>>>,aiNodeAnim**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiNodeAnim **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiNodeAnim *>>>
+                 ]
+         MaterialSystem.cpp
+         NFFLoader.cpp
+         OFFLoader.cpp
+         ObjFileImporter.cpp
+         ObjFileMtlImporter.cpp
+         ObjFileParser.cpp
+         ObjExporter.cpp
+         OgreImporter.cpp
+         OgreMaterial.cpp
+         OgreMesh.cpp
+         OgreSkeleton.cpp
+         PlyLoader.cpp
+         PlyParser.cpp
+         PlyExporter.cpp
+         Q3DLoader.cpp
+         Q3BSPFileParser.cpp
+         Q3BSPFileImporter.cpp
+         Q3BSPZipArchive.cpp
+         RawLoader.cpp
+         SMDLoader.cpp
+         STLLoader.cpp
+         STLExporter.cpp
+         UnrealLoader.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Q3BSPFileImporter.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\Q3BSPFileImporter.cpp(527) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiTexture *>>>,aiTexture**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiTexture **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiTexture *>>>
+                 ]
+         XFileImporter.cpp
+         XFileParser.cpp
+         MS3DLoader.cpp
+         COBLoader.cpp
+         BlenderLoader.cpp
+         BlenderDNA.cpp
+         BlenderScene.cpp
+         BlenderModifier.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\XFileImporter.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\XFileImporter.cpp(403) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiBone *>>>,aiBone**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiBone **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiBone *>>>
+                 ]
+         NDOLoader.cpp
+         IFCLoader.cpp
+         IFCReaderGen.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderLoader.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderLoader.cpp(371) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>,aiMesh**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiMesh **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>
+                 ]
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+         IFCUtil.cpp
+         IFCGeometry.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderModifier.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderModifier.cpp(255) : see reference to function template instantiation '_OutIt std::copy<unsigned int*,unsigned int*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=unsigned int *
+         ,            _InIt=unsigned int *
+                 ]
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\algorithm(1026): warning C4996: 'std::_Transform1': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderModifier.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\algorithm(1007) : see declaration of 'std::_Transform1'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BlenderModifier.cpp(257) : see reference to function template instantiation '_OutIt std::transform<unsigned int*,unsigned int*,std::binder1st<std::plus<unsigned int>>>(_InIt,_InIt,_OutIt,_Fn1)' being compiled
+                 with
+                 [
+                     _OutIt=unsigned int *
+         ,            _InIt=unsigned int *
+         ,            _Fn1=std::binder1st<std::plus<unsigned int>>
+                 ]
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\NDOLoader.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\NDOLoader.cpp(288) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<unsigned int>>>,unsigned int*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=unsigned int *
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<unsigned int>>>
+                 ]
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+         IFCMaterial.cpp
+         IFCProfile.cpp
+         IFCCurve.cpp
+         STEPFileReader.cpp
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\STEPFileReader.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\STEPFileReader.cpp(237) : see reference to function template instantiation '_OutIt std::copy<const _Elem*,char*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=char *
+         ,            _Elem=char
+         ,            _InIt=const char *
+                 ]
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCLoader.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCLoader.cpp(228) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>,aiMesh**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiMesh **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>
+                 ]
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCUtil.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\IFCUtil.cpp(77) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiVector3t<Assimp::IFC::IfcFloat>>>>,aiVector3D*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiVector3D *
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiVector3t<Assimp::IFC::IfcFloat>>>>
+                 ]
+         XGLLoader.cpp
+         irrXML.cpp
+         shapes.cc
+     1>D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2132): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators' (D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\XGLLoader.cpp)
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\XGLLoader.cpp(230) : see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>,aiMesh**>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=aiMesh **
+         ,            _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<aiMesh *>>>
+                 ]
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+                 D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\xutility(2113) : see declaration of 'std::_Copy_impl'
+         advancing_front.cc
+         cdt.cc
+         sweep.cc
+         sweep_context.cc
+         clipper.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\glfw-3.1.2\include\GLFW" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\glew-1.13.0\include" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\AntTweakBar-1.16\include" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\BoostWorkaround" /I"D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\code\..\contrib\unzip" /Zi /nologo /W3 /WX- /MP /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D TW_STATIC /D TW_NO_LIB_PRAGMA /D TW_NO_DIRECT3D /D GLEW_STATIC /D _CRT_SECURE_NO_WARNINGS /D ASSIMP_BUILD_BOOST_WORKAROUND /D ASSIMP_BUILD_DLL_EXPORT /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"assimp.dir\Debug\\" /Fd"assimp.dir\Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\ConvertUTF\ConvertUTF.c" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\unzip\ioapi.c" "D:\git\Computer-Graphics\opengl-tutorial\ogl-master\external\assimp-3.0.1270\contrib\unzip\unzip.c"
+         ConvertUTF.c
+         ioapi.c
+         unzip.c
+       Lib:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\git\Computer-Graphics\opengl-tutorial\bin-vc12\external\assimp-3.0.1270\code\Debug\assimp.lib" /NOLOGO  /machine:X86 assimp.dir\Debug\Assimp.obj
+         assimp.dir\Debug\AssimpPCH.obj
+         assimp.dir\Debug\BaseImporter.obj
+         assimp.dir\Debug\BaseProcess.obj
+         assimp.dir\Debug\PostStepRegistry.obj
+         assimp.dir\Debug\ImporterRegistry.obj
+         assimp.dir\Debug\DefaultIOStream.obj
+         assimp.dir\Debug\DefaultIOSystem.obj
+         assimp.dir\Debug\Importer.obj
+         assimp.dir\Debug\SGSpatialSort.obj
+         assimp.dir\Debug\VertexTriangleAdjacency.obj
+         assimp.dir\Debug\SpatialSort.obj
+         assimp.dir\Debug\SceneCombiner.obj
+         assimp.dir\Debug\ScenePreprocessor.obj
+         assimp.dir\Debug\SkeletonMeshBuilder.obj
+         assimp.dir\Debug\SplitByBoneCountProcess.obj
+         assimp.dir\Debug\StandardShapes.obj
+         assimp.dir\Debug\TargetAnimation.obj
+         assimp.dir\Debug\RemoveComments.obj
+         assimp.dir\Debug\Subdivision.obj
+         assimp.dir\Debug\DefaultLogger.obj
+         assimp.dir\Debug\Exporter.obj
+         assimp.dir\Debug\AssimpCExport.obj
+         assimp.dir\Debug\CalcTangentsProcess.obj
+         assimp.dir\Debug\ComputeUVMappingProcess.obj
+         assimp.dir\Debug\ConvertToLHProcess.obj
+         assimp.dir\Debug\FindDegenerates.obj
+         assimp.dir\Debug\FindInstancesProcess.obj
+         assimp.dir\Debug\FindInvalidDataProcess.obj
+         assimp.dir\Debug\FixNormalsStep.obj
+         assimp.dir\Debug\GenFaceNormalsProcess.obj
+         assimp.dir\Debug\GenVertexNormalsProcess.obj
+         assimp.dir\Debug\PretransformVertices.obj
+         assimp.dir\Debug\ImproveCacheLocality.obj
+         assimp.dir\Debug\JoinVerticesProcess.obj
+         assimp.dir\Debug\LimitBoneWeightsProcess.obj
+         assimp.dir\Debug\RemoveRedundantMaterials.obj
+         assimp.dir\Debug\RemoveVCProcess.obj
+         assimp.dir\Debug\SortByPTypeProcess.obj
+         assimp.dir\Debug\SplitLargeMeshes.obj
+         assimp.dir\Debug\TerragenLoader.obj
+         assimp.dir\Debug\TextureTransform.obj
+         assimp.dir\Debug\TriangulateProcess.obj
+         assimp.dir\Debug\ValidateDataStructure.obj
+         assimp.dir\Debug\OptimizeGraph.obj
+         assimp.dir\Debug\OptimizeMeshes.obj
+         assimp.dir\Debug\DeboneProcess.obj
+         assimp.dir\Debug\ProcessHelper.obj
+         assimp.dir\Debug\MakeVerboseFormat.obj
+         assimp.dir\Debug\3DSConverter.obj
+         assimp.dir\Debug\3DSLoader.obj
+         assimp.dir\Debug\ACLoader.obj
+         assimp.dir\Debug\ASELoader.obj
+         assimp.dir\Debug\ASEParser.obj
+         assimp.dir\Debug\B3DImporter.obj
+         assimp.dir\Debug\BVHLoader.obj
+         assimp.dir\Debug\ColladaLoader.obj
+         assimp.dir\Debug\ColladaParser.obj
+         assimp.dir\Debug\ColladaExporter.obj
+         assimp.dir\Debug\DXFLoader.obj
+         assimp.dir\Debug\CSMLoader.obj
+         assimp.dir\Debug\HMPLoader.obj
+         assimp.dir\Debug\IRRLoader.obj
+         assimp.dir\Debug\IRRMeshLoader.obj
+         assimp.dir\Debug\IRRShared.obj
+         assimp.dir\Debug\LWOAnimation.obj
+         assimp.dir\Debug\LWOBLoader.obj
+         assimp.dir\Debug\LWOLoader.obj
+         assimp.dir\Debug\LWOMaterial.obj
+         assimp.dir\Debug\LWSLoader.obj
+         assimp.dir\Debug\M3Importer.obj
+         assimp.dir\Debug\MD2Loader.obj
+         assimp.dir\Debug\MD3Loader.obj
+         assimp.dir\Debug\MD5Loader.obj
+         assimp.dir\Debug\MD5Parser.obj
+         assimp.dir\Debug\MDCLoader.obj
+         assimp.dir\Debug\MDLLoader.obj
+         assimp.dir\Debug\MDLMaterialLoader.obj
+         assimp.dir\Debug\MaterialSystem.obj
+         assimp.dir\Debug\NFFLoader.obj
+         assimp.dir\Debug\OFFLoader.obj
+         assimp.dir\Debug\ObjFileImporter.obj
+         assimp.dir\Debug\ObjFileMtlImporter.obj
+         assimp.dir\Debug\ObjFileParser.obj
+         assimp.dir\Debug\ObjExporter.obj
+         assimp.dir\Debug\OgreImporter.obj
+         assimp.dir\Debug\OgreMaterial.obj
+         assimp.dir\Debug\OgreMesh.obj
+         assimp.dir\Debug\OgreSkeleton.obj
+         assimp.dir\Debug\PlyLoader.obj
+         assimp.dir\Debug\PlyParser.obj
+         assimp.dir\Debug\PlyExporter.obj
+         assimp.dir\Debug\Q3DLoader.obj
+         assimp.dir\Debug\Q3BSPFileParser.obj
+         assimp.dir\Debug\Q3BSPFileImporter.obj
+         assimp.dir\Debug\Q3BSPZipArchive.obj
+         assimp.dir\Debug\RawLoader.obj
+         assimp.dir\Debug\SMDLoader.obj
+         assimp.dir\Debug\STLLoader.obj
+         assimp.dir\Debug\STLExporter.obj
+         assimp.dir\Debug\UnrealLoader.obj
+         assimp.dir\Debug\XFileImporter.obj
+         assimp.dir\Debug\XFileParser.obj
+         assimp.dir\Debug\MS3DLoader.obj
+         assimp.dir\Debug\COBLoader.obj
+         assimp.dir\Debug\BlenderLoader.obj
+         assimp.dir\Debug\BlenderDNA.obj
+         assimp.dir\Debug\BlenderScene.obj
+         assimp.dir\Debug\BlenderModifier.obj
+         assimp.dir\Debug\NDOLoader.obj
+         assimp.dir\Debug\IFCLoader.obj
+         assimp.dir\Debug\IFCReaderGen.obj
+         assimp.dir\Debug\IFCUtil.obj
+         assimp.dir\Debug\IFCGeometry.obj
+         assimp.dir\Debug\IFCMaterial.obj
+         assimp.dir\Debug\IFCProfile.obj
+         assimp.dir\Debug\IFCCurve.obj
+         assimp.dir\Debug\STEPFileReader.obj
+         assimp.dir\Debug\XGLLoader.obj
+         assimp.dir\Debug\irrXML.obj
+         assimp.dir\Debug\ConvertUTF.obj
+         assimp.dir\Debug\ioapi.obj
+         assimp.dir\Debug\unzip.obj
+         assimp.dir\Debug\shapes.obj
+         assimp.dir\Debug\advancing_front.obj
+         assimp.dir\Debug\cdt.obj
+         assimp.dir\Debug\sweep.obj
+         assimp.dir\Debug\sweep_context.obj
+         assimp.dir\Debug\clipper.obj
+         assimp.vcxproj -> D:\git\Computer-Graphics\opengl-tutorial\bin-vc12\external\assimp-3.0.1270\code\Debug\assimp.lib
+     1>Done Building Project "D:\git\Computer-Graphics\opengl-tutorial\bin-vc12\external\assimp-3.0.1270\code\assimp.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:43.92

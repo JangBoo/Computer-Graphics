@@ -1,0 +1,28 @@
+﻿Build started 2018-01-29 21:05:35.
+     1>Project "D:\git\Computer-Graphics\Lab1_0118\Lab1_0118\Lab1_0118.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"D:\git\Computer-Graphics\External\include" /Zi /nologo /W3 /WX- /sdl /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Driver.cpp
+         Driver.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"D:\git\Computer-Graphics\External\include" /Zi /nologo /W3 /WX- /sdl /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TC /errorReport:prompt glad.c
+         glad.c
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\git\Computer-Graphics\Lab1_0118\x64\Debug\Lab1_0118.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\git\Computer-Graphics\External\lib" opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"D:\git\Computer-Graphics\Lab1_0118\x64\Debug\Lab1_0118.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\git\Computer-Graphics\Lab1_0118\x64\Debug\Lab1_0118.lib" /MACHINE:X64 x64\Debug\Driver.obj
+         x64\Debug\glad.obj
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwInit referenced in function main
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwTerminate referenced in function main
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwWindowHint referenced in function main
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwCreateWindow referenced in function main
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwWindowShouldClose referenced in function main
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwSetWindowShouldClose referenced in function "void __cdecl processInput(struct GLFWwindow *)" (?processInput@@YAXPEAUGLFWwindow@@@Z)
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwSetFramebufferSizeCallback referenced in function main
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwPollEvents referenced in function main
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwGetKey referenced in function "void __cdecl processInput(struct GLFWwindow *)" (?processInput@@YAXPEAUGLFWwindow@@@Z)
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwMakeContextCurrent referenced in function main
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwSwapBuffers referenced in function main
+     1>Driver.obj : error LNK2019: unresolved external symbol glfwGetProcAddress referenced in function main
+     1>D:\git\Computer-Graphics\Lab1_0118\x64\Debug\Lab1_0118.exe : fatal error LNK1120: 12 unresolved externals
+     1>Done Building Project "D:\git\Computer-Graphics\Lab1_0118\Lab1_0118\Lab1_0118.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.18

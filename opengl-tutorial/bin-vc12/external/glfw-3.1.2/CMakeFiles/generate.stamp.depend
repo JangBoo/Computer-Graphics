@@ -1,0 +1,22 @@
+# CMake generation dependency list for this directory.
+D:/git/Computer-Graphics/opengl-tutorial/ogl-master/external/glfw-3.1.2/CMakeLists.txt
+D:/Program Files/CMake/share/cmake-3.10/Modules/FindOpenGL.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/FindPackageMessage.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/FindThreads.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/CheckLibraryExists.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/CheckSymbolExists.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/CheckIncludeFile.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/FindPackageMessage.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/FindDoxygen.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/FindPackageHandleStandardArgs.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/FindPackageMessage.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/CMakePackageConfigHelpers.cmake
+D:/Program Files/CMake/share/cmake-3.10/Modules/WriteBasicConfigVersionFile.cmake
+D:/git/Computer-Graphics/opengl-tutorial/ogl-master/external/glfw-3.1.2/src/glfw3Config.cmake.in
+D:/Program Files/CMake/share/cmake-3.10/Modules/BasicConfigVersion-SameMajorVersion.cmake.in
+D:/git/Computer-Graphics/opengl-tutorial/ogl-master/external/glfw-3.1.2/docs/Doxyfile.in
+D:/git/Computer-Graphics/opengl-tutorial/ogl-master/external/glfw-3.1.2/src/glfw_config.h.in
+D:/git/Computer-Graphics/opengl-tutorial/ogl-master/external/glfw-3.1.2/src/glfw3.pc.in
+D:/git/Computer-Graphics/opengl-tutorial/ogl-master/external/glfw-3.1.2/cmake_uninstall.cmake.in
