@@ -21,6 +21,8 @@ int main() {
 		return -1;
 	}
 	
+	glClearColor(.7, .7, .7, 0);
+
 	GLuint shdr = loadShaders("vertex.shader", "fragment.shader");
 	glUseProgram(shdr);
 
@@ -40,6 +42,8 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*v.size(), &v[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+
 	glEnableVertexAttribArray(0);
 
 	//------ MODEL MATRIX ---------
@@ -56,18 +60,16 @@ int main() {
 	glm::mat4 pm = glm::perspective(45.f, 800.f / 600.f, 0.1f, 100.f);
 
 	GLuint mm_addr = glGetUniformLocation(shdr, "m_m");
-	GLuint vm_addr = glGetUniformLocation(shdr, "v_m");
 	GLuint pm_addr = glGetUniformLocation(shdr, "p_m");
+	GLuint vm_addr = glGetUniformLocation(shdr, "v_m");
 	glUniformMatrix4fv(mm_addr, 1, false, glm::value_ptr(mm));
 	glUniformMatrix4fv(pm_addr, 1, false, glm::value_ptr(pm));
+		
 
-	glClearColor(.7, .7, .7, 0);
 	while (!glfwWindowShouldClose(window)) {
-
-
-		glfwPollEvents();
-		glfwSwapBuffers(window);
+		
 		glClear(GL_COLOR_BUFFER_BIT);
+		
 		glUniformMatrix4fv(vm_addr, 1, false, glm::value_ptr(vm));
 
 		glm::mat4 anchor = glm::translate(glm::mat4(1.0f), -glm::vec3(0, 0.5, 0));
@@ -83,19 +85,16 @@ int main() {
 		glUniformMatrix4fv(mm_addr, 1, false, glm::value_ptr(mm));
 		glDrawArrays(GL_TRIANGLES, 0, v.size());
 
-		scale = glm::scale(glm::mat4(1.0f), glm::vec3(.5, .5, .5));
+		
 		translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.5, -0.5, 0));
-
 		rotate = glm::rotate(glm::mat4(1.0f), glm::radians(45.f), glm::vec3(0, 0, 1));
-
-
 		mm = mem * translate * _anchor * rotate * anchor * scale;
-
-
 		glUniformMatrix4fv(mm_addr, 1, false, glm::value_ptr(mm));
 		glDrawArrays(GL_TRIANGLES, 0, v.size());
 
 
+		glfwPollEvents();
+		glfwSwapBuffers(window);
 	}
 	return 0;
 }
