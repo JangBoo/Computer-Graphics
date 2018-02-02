@@ -5,7 +5,6 @@
 *.slo
 *.lo
 *.o
-*.obj
 
 # Precompiled Headers
 *.gch
@@ -14,7 +13,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -24,22 +22,15 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
 *.out
 *.app
 
-labs/Labs.sdf
-labs/Labs.v12.suo
-labs/ipch/
-labs/*.suo
-labs/*/*.suo
 
+*sdf
+*.suo
 
-tutorials/Debug/
-tutorials/*/Debug/
-
-tutorials/*.suo
-tutorials/*/*.suo
+Debug/
+ipch/
