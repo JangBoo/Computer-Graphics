@@ -7,7 +7,7 @@
 // TODO: reference any additional headers you need in STDAFX.H
 // and not in this file
 
-GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path) {
+GLuint LoadShaders(std::string vertex_shader_path, std::string fragment_shader_path) {
 	// Create the shaders
 	// Read the Vertex Shader code from the file
 	std::string VertexShaderCode;

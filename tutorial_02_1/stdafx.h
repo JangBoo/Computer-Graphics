@@ -18,4 +18,4 @@
 #include "..\external\glm\gtc\matrix_transform.hpp"
 #include "..\external\glm\gtc\type_ptr.hpp"
 
-GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
+GLuint LoadShaders(std::string vertex_shader_path, std::string fragment_shader_path);

@@ -16,6 +16,9 @@ int main() {
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
+	// Create and compile our GLSL program from the shaders
+	GLuint programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
+
 	GLuint VertexArrayID;
 	/*
 	generate vertex array object names
@@ -73,6 +76,10 @@ int main() {
 		*/
 		glClear( GL_COLOR_BUFFER_BIT );
 
+		// Use our shader
+		// so every time we would render in this way
+		glUseProgram(programID);
+
 		/*
 		By default, all client-side capabilities are disabled, including all generic vertex attribute arrays.
 		If enabled, the values in the generic vertex attribute array will be accessed and used for rendering when calls are made to vertex array commands such as 
@@ -80,8 +87,15 @@ int main() {
 		*/
 		glEnableVertexAttribArray(0);
 	
+		//glBindVertexArray(VertexArrayID);
 		// Draw the triangle !
+		/*
+		0: Specifies the starting index in the enabled arrays.
+		3: Specifies the number of indices to be rendered.
+		*/
 		glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
+
+		//glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs), remember: do NOT unbind the EBO, keep it bound to this VAO
 
 		glDisableVertexAttribArray(0);
 

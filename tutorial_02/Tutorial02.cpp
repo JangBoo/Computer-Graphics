@@ -79,11 +79,14 @@ int main() {
 			glDrawArrays, glDrawElements, glDrawRangeElements, glMultiDrawElements, or glMultiDrawArrays.
 		*/
 		glEnableVertexAttribArray(0);
-	
 		// Draw the triangle !
+		/*
+		0: Specifies the starting index in the enabled arrays.
+		3: Specifies the number of indices to be rendered.
+		*/
 		glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
-
 		glDisableVertexAttribArray(0);
+
 
 		// swaps the front and back buffers of the specified window.
 		glfwSwapBuffers(window);
