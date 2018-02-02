@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+labs/Labs.sdf
+labs/Labs.v12.suo
+labs/ipch/
+
+
+tutorials/Debug/
+tutorials/*/Debug/
