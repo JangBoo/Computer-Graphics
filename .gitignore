@@ -34,7 +34,12 @@
 labs/Labs.sdf
 labs/Labs.v12.suo
 labs/ipch/
+labs/*.suo
+labs/*/*.suo
 
 
 tutorials/Debug/
 tutorials/*/Debug/
+
+tutorials/*.suo
+tutorials/*/*.suo
