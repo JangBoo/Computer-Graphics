@@ -68,6 +68,9 @@ int initWindow(int width, int height, const char* title) {
 
 	glfwMakeContextCurrent(window);
 
+	// Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
+	glewExperimental = GL_TRUE;
+
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK) {
 		fprintf(stderr, "Failed to initialize GLEW\n");
