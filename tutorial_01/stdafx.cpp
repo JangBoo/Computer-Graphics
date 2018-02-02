@@ -7,41 +7,6 @@
 // TODO: reference any additional headers you need in STDAFX.H
 // and not in this file
 
-int initWindow(GLFWwindow* window, int width, int height, const char* title) {
-	// Initialise GLFW
-	if (!glfwInit()) {
-		fprintf(stderr, "Failed to initialize GLFW\n");
-		getchar();
-		return -1;
-	}
-
-	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	window = glfwCreateWindow(width, height, title, NULL, NULL);
-
-	if (window == NULL) {
-		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
-		getchar();
-		glfwTerminate();
-		return -1;
-	}
-
-	glfwMakeContextCurrent(window);
-
-	// Initialize GLEW
-	if (glewInit() != GLEW_OK) {
-		fprintf(stderr, "Failed to initialize GLEW\n");
-		getchar();
-		return -1;
-	}
-
-	return 0;
-}
-
 GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path) {
 	// Create the shaders
 	// Read the Vertex Shader code from the file

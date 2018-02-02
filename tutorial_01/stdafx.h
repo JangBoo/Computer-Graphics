@@ -18,6 +18,4 @@
 #include "..\external\glm\gtc\matrix_transform.hpp"
 #include "..\external\glm\gtc\type_ptr.hpp"
 
-int initWindow(GLFWwindow* window, int width, int height, std::string title);
-
 GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
