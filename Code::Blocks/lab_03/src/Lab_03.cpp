@@ -41,9 +41,9 @@ int main() {
     GLuint shdr = LoadShaders("vShader.vs","fShader.fs");
     glUseProgram(shdr);
 
-    vector<glm::vec3>v;
-    vector<glm::vec3>nv;
-    vector<glm::vec2>uv;
+    vector<glm::vec3> v;
+    vector<glm::vec3> nv;
+    vector<glm::vec2> uv;
 
     LoadOBJ("teddy.obj", v, nv, uv);
 
