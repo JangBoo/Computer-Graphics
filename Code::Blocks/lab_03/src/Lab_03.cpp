@@ -1,7 +1,5 @@
 // Include standard headers
 #include "common/stdafx.h"
-#include "ShaderProg.h"
-#include "ObjLoader.hpp"
 
 
 using namespace std;
@@ -55,7 +53,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     //create a window
-    GLFWwindow *window=glfwCreateWindow(WIDTH,HEIGHT, "exercise4", nullptr, nullptr);
+    GLFWwindow *window=glfwCreateWindow(WIDTH,HEIGHT, "lab_03", nullptr, nullptr);
     if(!window)
     {
         cout<<"Failed to open a glfw window."<<endl;
@@ -79,15 +77,14 @@ int main() {
     }
 
 
-    ShaderProg myShader("vshader.vs","fShader.fs");
-    myShader.use();
-
+    GLuint shdr = LoadShaders("vShader.vs","fShader.fs");
+    glUseProgram(shdr);
 
     vector<glm::vec3>v;
     vector<glm::vec3>nv;
     vector<glm::vec2>uv;
 
-    loadOBJ("teddy.obj", v, nv, uv);
+    LoadOBJ("teddy.obj", v, nv, uv);
 
 
     GLuint VAO, VBO;
@@ -121,9 +118,9 @@ int main() {
 
 
     //can be substitude with the functions defined in ShaderProg.h
-    GLuint mm_addr = glGetUniformLocation(myShader.ID, "model"); // Model matrix address (from vertex shader)
-    GLuint vm_addr = glGetUniformLocation(myShader.ID, "view"); // View matrix address
-    GLuint pm_addr = glGetUniformLocation(myShader.ID, "projection"); // Projection matrix address
+    GLuint mm_addr = glGetUniformLocation(shdr, "model"); // Model matrix address (from vertex shader)
+    GLuint vm_addr = glGetUniformLocation(shdr, "view"); // View matrix address
+    GLuint pm_addr = glGetUniformLocation(shdr, "projection"); // Projection matrix address
     glUniformMatrix4fv(mm_addr, 1, false, glm::value_ptr(model));
     glUniformMatrix4fv(pm_addr, 1, false, glm::value_ptr(pm));
     glClearColor(0.5f, 0.5f, 0.5f,1.0f);

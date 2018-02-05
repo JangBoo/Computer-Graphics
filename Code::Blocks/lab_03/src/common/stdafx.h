@@ -21,3 +21,11 @@
 
 
 GLuint LoadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
+
+#pragma warning(disable:4996)
+
+bool LoadOBJ(
+             const char * path,
+             std::vector<glm::vec3> & out_vertices,
+             std::vector<glm::vec3> & out_normals,
+             std::vector<glm::vec2> & out_uvs);

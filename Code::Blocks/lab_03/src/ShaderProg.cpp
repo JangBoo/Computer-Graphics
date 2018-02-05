@@ -20,52 +20,52 @@ ShaderProg::ShaderProg(const char* vertexShaderPath, const char* fragmentShaderP
     ifstream vertexInput(vertexShaderPath);
     if(!vertexInput)
     {
-        cout<<"Cannot open vertex shader file."<<endl;
+        cout<<"Cannot open vertex shader file." << vertexShaderPath <<endl;
         exit(EXIT_FAILURE);
     }
     ifstream fragmentInput(fragmentShaderPath);
     if(!fragmentInput)
     {
-        cout<<"Cannot open fragment shader file."<<endl;
+        cout<<"Cannot open fragment shader file."<< fragmentShaderPath<<endl;
     }
-    
+
     vertexStream<<vertexInput.rdbuf();
     fragmentStream<<fragmentInput.rdbuf();
-    
+
     vertexCode=vertexStream.str();
     fragCode=fragmentStream.str();
-    
+
     const char* vShaderCode=vertexCode.c_str();
     const char* fShaderCode=fragCode.c_str();
-    
+
     vertexInput.close();
     fragmentInput.close();
-    
+
     //compile
     unsigned int vertex, fragment;
     int success;
     char infoLog[512];
-    
+
     //vertex shader
     vertex=glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex,1,&vShaderCode,NULL);
     glCompileShader(vertex);
     checkCompileErrors(vertex, "VERTEX");
-    
-    
+
+
     //fragment shader
     fragment=glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment,1,&fShaderCode,NULL);
     glCompileShader(fragment);
     checkCompileErrors(fragment, "FRAGMENT");
-    
+
     //link
     ID=glCreateProgram();
     glAttachShader(ID,vertex);
     glAttachShader(ID,fragment);
     glLinkProgram(ID);
     checkCompileErrors(ID, "PROGRAM");
-    
+
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 }
