@@ -32,5 +32,8 @@
 *sdf
 *.suo
 
-Debug/
-ipch/
+*/Debug/
+*/ipch/
+
+*/obj/
+*/bin/
