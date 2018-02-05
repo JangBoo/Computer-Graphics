@@ -30,14 +30,16 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="/Arch/include" />
 		</Compiler>
 		<Linker>
 			<Add library="GL" />
-			<Add library="X11" />
+			<Add library="glfw" />
+			<Add library="GLEW" />
+			<Add library="Xxf86vm" />
+			<Add directory="/Arch/lib64" />
 		</Linker>
-		<Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="Main.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
