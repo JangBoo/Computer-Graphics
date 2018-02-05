@@ -35,5 +35,8 @@
 */Debug/
 */ipch/
 
+
+**/*.layout
+**/*.depend
 **/obj/
 **/bin/
