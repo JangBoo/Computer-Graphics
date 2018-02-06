@@ -42,7 +42,7 @@ int main()
     glBindVertexArray(VertexArrayID);
 
     // Create and compile our GLSL program from the shaders
-    GLuint programID = LoadShaders(vertexShader, fragmentShader);
+    GLuint programID = loadShaders(vertexShader, fragmentShader);
 
     // Rtrieve the location of the uniform variable within the specified program object, so we can set the value
     GLuint MatrixID = glGetUniformLocation(programID, "MVP");

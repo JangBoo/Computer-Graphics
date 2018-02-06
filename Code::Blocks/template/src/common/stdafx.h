@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstring>
 
 // TODO: reference additional headers your program requires here
 #include <GL/glew.h>	    // include GL Extension Wrangler
@@ -20,12 +21,12 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-GLuint LoadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
+GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
 
-#pragma warning(disable:4996)
 
-bool LoadOBJ(
-    const char * path,
+bool loadOBJ(
+    std::string path,
     std::vector<glm::vec3> & out_vertices,
-    std::vector<glm::vec3> & out_normals,
-    std::vector<glm::vec2> & out_uvs);
+    std::vector<glm::vec2> & out_uvs,
+    std::vector<glm::vec3> & out_normals
+);
