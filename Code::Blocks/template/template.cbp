@@ -39,8 +39,10 @@
 			<Add library="GLEW" />
 			<Add library="Xxf86vm" />
 			<Add directory="/Arch/lib64" />
+			<Add directory="/usr/lib64" />
+			<Add directory="/usr/lib/x86_64-linux-gnu" />
 		</Linker>
-		<Unit filename="src/Template.cpp" />
+		<Unit filename="src/Main.cpp" />
 		<Unit filename="src/common/stdafx.cpp" />
 		<Unit filename="src/common/stdafx.h" />
 		<Extensions>
