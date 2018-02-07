@@ -1,8 +1,7 @@
 #version 330 core
 
 // Input vertex data, different for all executions of this shader.
-layout(location = 0) in vec3 vertex_grid;
-layout(location = 1) in vec3 vertex_coordinate;
+layout(location = 0) in vec3 vertex_coordinate;
 
 // Output data ; will be interpolated for each fragment.
 out vec3 fragmentColor;
@@ -15,7 +14,7 @@ uniform mat4 Projection;
 
 void main(){
 	// Output position of the vertex, in clip space : MVP * position
-	gl_Position =  MVP * vec4(vertex_grid,1);
+	gl_Position =  MVP * vec4(vertex_coordinate,1);
 
-	fragmentColor = vertex_grid;
+	fragmentColor = vertex_coordinate;
 }
