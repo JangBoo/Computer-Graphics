@@ -2,6 +2,14 @@
 #include "common/stdafx.h"
 
 GLFWwindow* window;
+const unsigned int WIDTH = 1024, HEIGHT = 768;
+const std::string TITLE = "Assignment1";
+
+const std::string fragmentShader = "fragment.shader";
+const std::string vertexShader = "vertex.shader";
+
+const std::string obj = "cube.obj";
+
 
 int initWindow(int width, int height, const char* title);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -13,8 +21,8 @@ int main() {
 
 	glfwSetKeyCallback(window, keyCallback);
 
-	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	// Dark grey background
+	glClearColor(0.7f, 0.7f, 0.7f, 0.1f);
 
 	GLuint VertexArrayID;
 	/*
