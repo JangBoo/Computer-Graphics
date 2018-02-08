@@ -69,8 +69,8 @@ int main() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*color_diff.size(), &color_diff[0], GL_STATIC_DRAW);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glVertexAttribDivisor(0, 0);
-	glVertexAttribDivisor(1, 1);
+	glVertexAttribDivisor(0, 0);// one vertex to one vertex
+	glVertexAttribDivisor(1, 1);// one vertex to one intance
 	glVertexAttribDivisor(2, 1);
 
 
@@ -123,11 +123,11 @@ int main() {
 		glUniformMatrix4fv(mm_addr, 1, false, glm::value_ptr(mm));
 		//glDrawArrays(GL_TRIANGLES, 0, v.size());
 
-		glDrawArraysInstanced(GL_TRIANGLES, 0, v.size(), 3);
+		//glDrawArraysInstanced(GL_TRIANGLES, 0, v.size(), 3);
 
         //glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
-        //glDrawElementsInstanced(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0, 3);
+        glDrawElementsInstanced(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0, 3);
 
 		translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.5, -0.5, 0));
 		rotate = glm::rotate(glm::mat4(1.0f), glm::radians(45.f), glm::vec3(0, 0, 1));
