@@ -38,7 +38,10 @@
 			<Add library="glfw" />
 			<Add library="GLEW" />
 			<Add library="Xxf86vm" />
+			<Add directory="/usr/lib64/nvidia" />
 			<Add directory="/Arch/lib64" />
+			<Add directory="/usr/lib64" />
+			<Add directory="/usr/lib/x86_64-linux-gnu" />
 		</Linker>
 		<Unit filename="src/Lab_03.cpp" />
 		<Unit filename="src/common/stdafx.cpp" />
