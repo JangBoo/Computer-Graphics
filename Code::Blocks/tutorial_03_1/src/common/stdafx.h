@@ -20,4 +20,4 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-GLuint LoadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
+GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path);

@@ -17,7 +17,7 @@ int main() {
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
+	GLuint programID = loadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
 
 	GLuint VertexArrayID;
 	/*

@@ -35,7 +35,7 @@ int main() {
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("TransformVertexShader.vertexshader", "ColorFragmentShader.fragmentshader");
+	GLuint programID = loadShaders("TransformVertexShader.vertexshader", "ColorFragmentShader.fragmentshader");
 
 	// Rtrieve the location of the uniform variable within the specified program object, so we can set the value
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");

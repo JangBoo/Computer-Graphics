@@ -71,7 +71,7 @@ int main() {
 		);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
+	GLuint programID = loadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
 
 	// Rtrieve the location of the uniform variable within the specified program object, so we can set the value
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");

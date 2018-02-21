@@ -20,9 +20,9 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-GLuint LoadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
+GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
 
-bool LoadOBJ(
+bool loadOBJ(
              const char * path,
              std::vector<glm::vec3> & out_vertices,
              std::vector<glm::vec3> & out_normals,

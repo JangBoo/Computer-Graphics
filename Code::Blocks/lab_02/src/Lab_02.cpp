@@ -23,7 +23,7 @@ int main() {
 
 	glClearColor(.7, .7, .7, 0);
 
-	GLuint shdr = LoadShaders("vertex.shader", "fragment.shader");
+	GLuint shdr = loadShaders("vertex.shader", "fragment.shader");
 	glUseProgram(shdr);
 
 	std::vector<glm::vec3> v = {

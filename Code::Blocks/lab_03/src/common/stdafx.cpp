@@ -7,7 +7,7 @@
 // TODO: reference any additional headers you need in STDAFX.H
 // and not in this file
 
-GLuint LoadShaders(std::string vertex_shader_path, std::string fragment_shader_path) {
+GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path) {
 	// Create the shaders
 	// Read the Vertex Shader code from the file
 	std::string VertexShaderCode;
@@ -79,7 +79,7 @@ GLuint LoadShaders(std::string vertex_shader_path, std::string fragment_shader_p
 	return shaderProgram;
 }
 
-bool LoadOBJ(
+bool loadOBJ(
              const char * path,
              std::vector<glm::vec3> & out_vertices,
              std::vector<glm::vec3> & out_normals,
