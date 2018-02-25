@@ -1,0 +1,3 @@
+/home/ling/git/Computer-Graphics/learnopengl/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/ling/git/Computer-Graphics/learnopengl/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ling/git/Computer-Graphics/learnopengl/cmake-build-debug/CMakeFiles/learnopengl.dir
