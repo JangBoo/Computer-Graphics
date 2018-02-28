@@ -33,10 +33,11 @@ glm::mat4 Model = glm::mat4(1.f);
 glm::mat4 View;
 glm::mat4 Projection;
 
-
 // ---- VIEW MATRIX global variables -----
-glm::vec3 c_pos = glm::vec3(0, 10, 30); // camera position
-glm::vec3 c_dir = glm::vec3(0.0f, -10.0f, -30.0f); // camera direction
+float c_rotate_xz = 0.0f;
+float c_rotate_y = 10.0f;
+glm::vec3 c_pos = glm::vec3(sin(c_rotate_xz) * 20, c_rotate_y, cos(c_rotate_xz) * 20); // camera position
+glm::vec3 c_dir = glm::vec3(0.0f, 0.0f, 0.0f); // camera direction
 glm::vec3 c_up = glm::vec3(0, 1, 0); // tell the camera which way is 'up'
 
 float moveOnX=0,moveOnZ=0;
@@ -57,6 +58,7 @@ bool firstMouse=true;
 int init_window(int width, int height, const std::string title);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void window_size_callback(GLFWwindow* window, int width, int height);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 int main()
 {
@@ -68,6 +70,7 @@ int main()
 
     //glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetWindowSizeCallback(window, window_size_callback);
+    glfwSetKeyCallback(window, key_callback);
     //glfwSetCursorPosCallback(window, mouse_callback);
     //glfwSetScrollCallback(window, scroll_callback);
 
@@ -121,10 +124,7 @@ int main()
     // Model matrix: an identity matrix (model will be at the origin)
     Model = glm::mat4(1.0f);
 
-    // Camera matrix
-    View = glm::lookAt(c_pos, c_pos+c_dir, c_up);
-
-    // Projection matrix: 45� Field of View, ration of "1024/768", dispaly range: 0.1 unit <-> 100 units
+    // Projection matrix: 45 Field of View, ration of "1024/768", dispaly range: 0.1 unit <-> 100 units
     Projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 100.0f);
     // Or, for an ortho camera:
     // glm::mat4 Projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f); // In world coordinates
@@ -149,6 +149,9 @@ int main()
         glBindVertexArray(VertexArrayID[0]);
         glUseProgram(grid_shader);
 
+        c_pos = glm::vec3(sin(c_rotate_xz) * 20, c_rotate_y, cos(c_rotate_xz) * 20); // camera position
+        // Camera matrix
+        View = glm::lookAt(c_pos, c_dir, c_up);
         // Our ModelViewProjection: multiplication of our 3 matrices
         glm::mat4 MVP = Projection * View * Model;
         //////////////////////////////////////////////////////////
@@ -289,5 +292,37 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void window_size_callback(GLFWwindow* window, int width, int height)
 {
     Projection = glm::perspective(fov, (float)width/(float)height, 0.1f, 100.0f);
-	glViewport(0, 0, width, height);//What does this do?
+	glViewport(0, 0, width, height);
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_LEFT){
+        if(action == GLFW_PRESS){
+            c_rotate_xz -= 0.1f;
+        }else if(action == GLFW_REPEAT){
+            c_rotate_xz -= 0.05f;
+        }
+    }else if(key == GLFW_KEY_RIGHT){
+        if(action == GLFW_PRESS){
+            c_rotate_xz += 0.1f;
+        }else if(action == GLFW_REPEAT){
+            c_rotate_xz += 0.05f;
+        }
+    }else if(key == GLFW_KEY_UP){
+        if(action == GLFW_PRESS){
+            c_rotate_y += 0.1f;
+        }else if(action == GLFW_REPEAT){
+            c_rotate_y += 0.05f;
+        }
+    }else if(key == GLFW_KEY_DOWN){
+        if(c_rotate_y <= 0.0f){
+            return;
+        }
+        if(action == GLFW_PRESS){
+            c_rotate_y -= 0.1f;
+        }else if(action == GLFW_REPEAT){
+            c_rotate_y -= 0.05f;
+        }
+    }
 }
