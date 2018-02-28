@@ -53,7 +53,7 @@ int main()
 
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader ourShader("5.2.transform.vs", "5.2.transform.fs");
+    Shader ourShader("shaders/5.2.transform.vs", "shaders/5.2.transform.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -62,7 +62,7 @@ int main()
          0.5f,  0.5f, 0.0f,    1.0f, 1.0f, // top right
          0.5f, -0.5f, 0.0f,    1.0f, 0.0f, // bottom right
         -0.5f, -0.5f, 0.0f,    0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,    0.0f, 1.0f  // top left 
+        -0.5f,  0.5f, 0.0f,    0.0f, 1.0f  // top left
     };
     unsigned int indices[] = {
         0, 1, 3, // first triangle
@@ -89,7 +89,7 @@ int main()
     glEnableVertexAttribArray(1);
 
 
-    // load and create a texture 
+    // load and create a texture
     // -------------------------
     unsigned int texture1, texture2;
     // texture 1
@@ -121,7 +121,7 @@ int main()
     glGenTextures(1, &texture2);
     glBindTexture(GL_TEXTURE_2D, texture2);
     // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -221,7 +221,7 @@ void processInput(GLFWwindow *window)
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and 
+    // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
