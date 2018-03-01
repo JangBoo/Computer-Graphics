@@ -47,8 +47,10 @@
 			<Add directory="/usr/lib/x86_64-linux-gnu" />
 			<Add directory="lib" />
 		</Linker>
+		<Unit filename="src/Horse.h" />
 		<Unit filename="src/InitShader.cpp" />
 		<Unit filename="src/MatrixStack.h" />
+		<Unit filename="src/Node.h" />
 		<Unit filename="src/Source.cpp" />
 		<Extensions>
 			<code_completion />
