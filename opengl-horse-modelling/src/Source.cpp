@@ -15,6 +15,7 @@ int running_count = 0;
 point4 points[NumVertices];
 vec3   normals[NumVertices];
 
+// base cube
 point4 vertices[8] = {
 	point4(-0.5, -0.5, 0.5, 1.0),
 	point4(-0.5, 0.5, 0.5, 1.0),
@@ -28,7 +29,7 @@ point4 vertices[8] = {
 
 //----------------------------------------------------------------------------
 
-// Set up menu item indices, which we can alos use with the joint angles
+// Set up menu item indices, which we can also use with the joint angles
 enum {
 	Torso = 0,
 	Head = 1,
@@ -51,8 +52,6 @@ GLuint       ModelView, Projection;
 
 int Index = 0;
 
-
-
 // Joint angles with initial values
 GLfloat
 theta[NumNodes] = {
@@ -69,14 +68,6 @@ theta[NumNodes] = {
 	-45.0	// Neck
 };
 
-int NEED_STEP = 10;
-int status;
-enum {
-	Stop = 0,
-	Walking = 1,
-	Running = 2
-};
-int total = 0;
 GLfloat
 target[NumNodes] = {
 	0.0,	// Torso
@@ -89,19 +80,27 @@ target[NumNodes] = {
 	0.0,	// LeftLowerLeg
 	0.0,	// RightUpperLeg
 	0.0,	// RightLowerLeg
-	0.0	// Neck
+	0.0	    // Neck
 };
 
 GLint angle = Torso;
 
 //----------------------------------------------------------------------------
 
-
-
 Node  nodes[NumNodes];
 
+
+int NEED_STEP = 10;
+int status;
+enum {
+	Stop = 0,
+	Walking = 1,
+	Running = 2
+};
+int total = 0;
 //----------------------------------------------------------------------------
 
+// color the cube
 void
 quad(int a, int b, int c, int d)
 {

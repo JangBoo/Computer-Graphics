@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="ComputerGraphics" />
+		<Option title="opengl-horse-modelling" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -30,7 +30,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="includes" />
+			<Add directory="include" />
 			<Add directory="/Arch/include" />
 			<Add directory="configuration" />
 		</Compiler>
@@ -40,18 +40,18 @@
 			<Add library="GLEW" />
 			<Add library="Xxf86vm" />
 			<Add library="dl" />
+			<Add library="glut" />
 			<Add directory="/usr/lib64/nvidia" />
 			<Add directory="/Arch/lib64" />
 			<Add directory="/usr/lib64" />
 			<Add directory="/usr/lib/x86_64-linux-gnu" />
 			<Add directory="lib" />
 		</Linker>
-		<Unit filename="configuration/root_directory.h" />
-		<Unit filename="src/1.getting_started/7.1.camera_circle/camera_circle.cpp" />
-		<Unit filename="src/glad.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/stb_image.cpp" />
+		<Unit filename="src/Horse.h" />
+		<Unit filename="src/InitShader.cpp" />
+		<Unit filename="src/MatrixStack.h" />
+		<Unit filename="src/Node.h" />
+		<Unit filename="src/Source.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
