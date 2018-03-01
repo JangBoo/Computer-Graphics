@@ -48,6 +48,7 @@
 			<Add directory="lib" />
 		</Linker>
 		<Unit filename="src/InitShader.cpp" />
+		<Unit filename="src/MatrixStack.h" />
 		<Unit filename="src/Source.cpp" />
 		<Extensions>
 			<code_completion />

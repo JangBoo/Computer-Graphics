@@ -1,6 +1,9 @@
 
 #include "Angel.h"
 #include <assert.h>
+#include "MatrixStack.h"
+#include "Node.h"
+#include "Horse.h"
 
 typedef Angel::vec4 point4;
 typedef Angel::vec4 color4;
@@ -23,67 +26,7 @@ point4 vertices[8] = {
 	point4(0.5, -0.5, -0.5, 1.0)
 };
 
-
-
 //----------------------------------------------------------------------------
-
-class MatrixStack {
-	int    _index;
-	int    _size;
-	mat4*  _matrices;
-
-public:
-	MatrixStack(int numMatrices = 32) :_index(0), _size(numMatrices)
-	{
-		_matrices = new mat4[numMatrices];
-	}
-
-	~MatrixStack()
-	{
-		delete[]_matrices;
-	}
-
-	void push(const mat4& m) {
-		assert(_index + 1 < _size);
-		_matrices[_index++] = m;
-	}
-
-	mat4& pop(void) {
-		assert(_index - 1 >= 0);
-		_index--;
-		return _matrices[_index];
-	}
-};
-
-MatrixStack  mvstack;
-mat4         model_view;
-GLuint       ModelView, Projection;
-
-int Index = 0;
-
-//----------------------------------------------------------------------------
-
-#define TORSO_HEIGHT 3.0
-#define TORSO_WIDTH 10.0
-#define TORSO_DEPTH 3.0
-
-#define NECK_HEIGHT 5.0
-#define NECK_WIDTH 2.0
-#define NECK_DEPTH 2.0
-
-#define UPPER_ARM_HEIGHT 3.0
-#define LOWER_ARM_HEIGHT 3.0
-#define UPPER_ARM_WIDTH  1.0
-#define LOWER_ARM_WIDTH  1.0
-
-#define UPPER_LEG_HEIGHT 3.0
-#define LOWER_LEG_HEIGHT 3.0
-#define UPPER_LEG_WIDTH  1.0
-#define LOWER_LEG_WIDTH  1.0
-
-#define HEAD_HEIGHT 3.0
-#define HEAD_WIDTH 1.5
-#define HEAD_DEPTH 2.0
 
 // Set up menu item indices, which we can alos use with the joint angles
 enum {
@@ -101,6 +44,14 @@ enum {
 	NumNodes,
 	Quit
 };
+
+MatrixStack  mvstack;
+mat4         model_view;
+GLuint       ModelView, Projection;
+
+int Index = 0;
+
+
 
 // Joint angles with initial values
 GLfloat
@@ -145,18 +96,7 @@ GLint angle = Torso;
 
 //----------------------------------------------------------------------------
 
-struct Node {
-	mat4  transform;
-	void(*render)(void);
-	Node* sibling;
-	Node* child;
 
-	Node() :
-		render(NULL), sibling(NULL), child(NULL) {}
-
-	Node(mat4& m, void(*render)(void), Node* sibling, Node* child) :
-		transform(m), render(render), sibling(sibling), child(child) {}
-};
 
 Node  nodes[NumNodes];
 

@@ -10,7 +10,13 @@
 
 #include <shader_gl.h>
 
+#include <Angel.h>
+
 #include "Vertices.h"
+
+#include "MatrixStack.h"
+#include "Node.h"
+#include "Horse.h"
 
 const std::string TITLE = "RobotHorse";
 const unsigned int WIDTH=1920, HEIGHT=1080;
@@ -158,6 +164,7 @@ int main()
         View = glm::lookAt(c_pos, c_dir, c_up);
         // Our ModelViewProjection: multiplication of our 3 matrices
         glm::mat4 MVP = Projection * View * Model;
+
         //////////////////////////////////////////////////////////
         //                                                      //
         // Draw Cartesian coordinate system                     //
