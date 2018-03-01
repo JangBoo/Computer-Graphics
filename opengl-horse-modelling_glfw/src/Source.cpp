@@ -11,8 +11,7 @@ typedef Angel::vec4 point4;
 typedef Angel::vec4 color4;
 
 const int NumVertices = 36;	//(6 faces)(2 triangles/face)(3 vertices/triangle)
-int count = 0;
-int running_count = 0;
+
 
 point4 points[NumVertices];
 vec3   normals[NumVertices];
@@ -473,18 +472,39 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
+        glViewport(0, 0, WIDTH, HEIGHT);
+
+	GLfloat left = -10.0, right = 10.0;
+	GLfloat bottom = -10.0, top = 10.0;
+	GLfloat zNear = -10.0, zFar = 10.0;
+
+	GLfloat aspect = GLfloat(WIDTH) / HEIGHT;
+
+	if (aspect > 1.0)
+	{
+		left *= aspect;
+		right *= aspect;
+	}
+	else
+	{
+		bottom /= aspect;
+		top /= aspect;
+	}
+
+	mat4 projection = Ortho(left, right, bottom, top, zNear, zFar);
+	glUniformMatrix4fv(Projection, 1, GL_TRUE, projection);
+
+	model_view = mat4(1.0);   // An Identity matrix
+
 
         // render
         // ------
-        glClearColor(0.8, 1.0, 0.6, 1.0);
+        glClearColor(1.0, 1.0, 1.0, 1.0);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //traverse(&nodes[Torso]);
-        mat4 instance = (Translate(0.0, 0.5 * TORSO_HEIGHT, 0.0) * Scale(TORSO_WIDTH, TORSO_HEIGHT, TORSO_DEPTH));
+        traverse(&nodes[Torso]);
 
-        glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
-        glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
