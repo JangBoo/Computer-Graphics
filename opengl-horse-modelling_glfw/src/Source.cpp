@@ -1,6 +1,11 @@
 #include <GL/glew.h>	    // include GL Extension Wrangler
 #include <GLFW/glfw3.h>     // include GLFW helper library
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "Angel.h"
 #include <assert.h>
 #include "MatrixStack.h"
@@ -406,6 +411,10 @@ int main()
         return -1;
     }
 
+   // configure global opengl state
+    // -----------------------------
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
     colorcube();
 
     // Initialize tree
@@ -441,38 +450,31 @@ int main()
     glEnableVertexAttribArray(vNormal);
     glVertexAttribPointer(vNormal, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
 
-    // Initialize shader lighting parameters
-    point4 light_position(0.0, 0.0, -1.0, 0.0);
-    color4 light_ambient(0.2, 0.2, 0.2, 1.0);
-    color4 light_diffuse(1.0, 1.0, 1.0, 1.0);
-    color4 light_specular(1.0, 1.0, 1.0, 1.0);
-
-    color4 material_ambient(1.0, 0.0, 1.0, 1.0);
-    color4 material_diffuse(1.0, 0.8, 0.0, 1.0);
-    color4 material_specular(1.0, 0.8, 0.0, 1.0);
-    float  material_shininess = 100.0;
-
-    color4 ambient_product = light_ambient * material_ambient;
-    color4 diffuse_product = light_diffuse * material_diffuse;
-    color4 specular_product = light_specular * material_specular;
-
-    glUniform4fv(glGetUniformLocation(program, "AmbientProduct"), 1, ambient_product);
-    glUniform4fv(glGetUniformLocation(program, "DiffuseProduct"), 1, diffuse_product);
-    glUniform4fv(glGetUniformLocation(program, "SpecularProduct"), 1, specular_product);
-
-    glUniform4fv(glGetUniformLocation(program, "LightPosition"), 1, light_position);
-
-    glUniform1f(glGetUniformLocation(program, "Shininess"), material_shininess);
 
     ModelView = glGetUniformLocation(program, "ModelView");
     Projection = glGetUniformLocation(program, "Projection");
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+/*
+
+glm::vec3 c_pos = glm::vec3(0, 0, 200); // camera position
+glm::vec3 c_dir = glm::vec3(0.0f, 0.0f, 0.0f); // camera direction
+glm::vec3 c_up = glm::vec3(0, 1, 0); // tell the camera which way is 'up'
+glm::mat4 View = glm::lookAt(c_pos, c_dir, c_up);
+float fov=45.0f;//perspective angle
+glm::mat4 projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 300.0f);
+
+   GLuint MVP = glGetUniformLocation(program, "Shader_View");
+   glUniformMatrix4fv(MVP, 1, GL_TRUE, &View[0][0]);
+*/
 
 
     while (!glfwWindowShouldClose(window))
     {
-        glViewport(0, 0, WIDTH, HEIGHT);
+         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//glUniformMatrix4fv(Projection, 1, GL_TRUE, &projection[0][0]);
+
 
 	GLfloat left = -10.0, right = 10.0;
 	GLfloat bottom = -10.0, top = 10.0;
@@ -494,14 +496,7 @@ int main()
 	mat4 projection = Ortho(left, right, bottom, top, zNear, zFar);
 	glUniformMatrix4fv(Projection, 1, GL_TRUE, projection);
 
-	model_view = mat4(1.0);   // An Identity matrix
 
-
-        // render
-        // ------
-        glClearColor(1.0, 1.0, 1.0, 1.0);
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         traverse(&nodes[Torso]);
 
