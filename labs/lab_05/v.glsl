@@ -15,6 +15,6 @@ void main()
 {
 	gl_Position = p_m * v_m * m_m * vec4(pos, 1.0f);
 	col = vec4(1,0,0, 1.0f);
-	nrm = vec3(inverse(transpose(m_m)) * vec4(pos, 1.0f));
+	nrm = vec3(inverse(transpose(m_m)) * vec4(normal, 1.0f));
 	fpo = vec3(m_m * vec4(pos, 1.0f));
 }
