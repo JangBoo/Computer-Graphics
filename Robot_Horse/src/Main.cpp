@@ -11,6 +11,7 @@
 #include <shader_gl.h>
 
 #include <Angel.h>
+#include <assert.h>
 
 #include "Vertices.h"
 
@@ -68,6 +69,340 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+
+typedef Angel::vec4 point4;
+typedef Angel::vec4 color4;
+
+// 36 vertices for a cube: (6 faces)(2 triangles/face)(3 vertices/triangle)
+const int NumVertices = 36;
+
+point4 points[NumVertices];
+vec3 normals[NumVertices];
+
+// eight points of a base cube
+point4 vertices[8] =
+{
+    point4(-0.5, -0.5, 0.5, 1.0),
+    point4(-0.5, 0.5, 0.5, 1.0),
+    point4(0.5, 0.5, 0.5, 1.0),
+    point4(0.5, -0.5, 0.5, 1.0),
+    point4(-0.5, -0.5, -0.5, 1.0),
+    point4(-0.5, 0.5, -0.5, 1.0),
+    point4(0.5, 0.5, -0.5, 1.0),
+    point4(0.5, -0.5, -0.5, 1.0)
+};
+
+//----------------------------------------------------------------------------
+
+// Set up menu item indices, which we can also use with the joint angles
+enum
+{
+    Torso = 0,
+    Head = 1,
+    LeftUpperArm = 2,
+    LeftLowerArm = 3,
+    RightUpperArm = 4,
+    RightLowerArm = 5,
+    LeftUpperLeg = 6,
+    LeftLowerLeg = 7,
+    RightUpperLeg = 8,
+    RightLowerLeg = 9,
+    Neck = 10,
+    NumNodes,
+    Quit
+};
+
+MatrixStack  mvstack;
+mat4         base_model;
+GLuint       shader_model;
+
+// Joint angles with initial values
+GLfloat theta[NumNodes] =
+{
+    0.0,	// Torso
+    -80.0,	// Head
+    180.0,	// LeftUpperArm
+    0.0,	// LeftLowerArm
+    180.0,	// RightUpperArm
+    0.0,	// RightLowerArm
+    170.0,	// LeftUpperLeg
+    10.0,	// LeftLowerLeg
+    170.0,	// RightUpperLeg
+    10.0,	// RightLowerLeg
+    -45.0	// Neck
+};
+
+GLfloat target[NumNodes] =
+{
+    0.0,	// Torso
+    0.0,	// Head
+    0.0,	// LeftUpperArm
+    0.0,	// LeftLowerArm
+    0.0,	// RightUpperArm
+    0.0,	// RightLowerArm
+    0.0,	// LeftUpperLeg
+    0.0,	// LeftLowerLeg
+    0.0,	// RightUpperLeg
+    0.0,	// RightLowerLeg
+    0.0	    // Neck
+};
+
+GLint angle = Torso;
+
+//----------------------------------------------------------------------------
+
+Node nodes[NumNodes];
+
+
+
+//----------------------------------------------------------------------------
+
+int tmp_index = 0;
+// given a face, initialize four points (two triangles) of it and their normals.
+void quad(int a, int b, int c, int d)
+{
+    vec4 u = vertices[b] - vertices[a];
+    vec4 v = vertices[c] - vertices[b];
+
+    vec3 normal = normalize(cross(u, v));
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[a];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[b];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[c];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[a];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[c];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[d];
+    tmp_index++;
+}
+
+// initialize the base cube and all the normals
+void initBaseCube(void)
+{
+    quad(1, 0, 3, 2);
+    quad(2, 3, 7, 6);
+    quad(3, 0, 4, 7);
+    quad(6, 5, 1, 2);
+    quad(4, 5, 6, 7);
+    quad(5, 4, 0, 1);
+}
+
+//----------------------------------------------------------------------------
+
+void traverse(Node* node)
+{
+    if (node == NULL)
+    {
+        return;
+    }
+
+    mvstack.push(base_model);
+
+    base_model *= node->transform;
+    node->render();
+
+    if (node->child)
+    {
+        traverse(node->child);
+    }
+
+    base_model = mvstack.pop();
+
+    if (node->sibling)
+    {
+        traverse(node->sibling);
+    }
+}
+
+//----------------------------------------------------------------------------
+
+void torso()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * TORSO_HEIGHT, 0.0) * Scale(TORSO_WIDTH, TORSO_HEIGHT, TORSO_DEPTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void neck()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * NECK_HEIGHT, 0.0) * Scale(NECK_WIDTH, NECK_HEIGHT, NECK_DEPTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void head()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * HEAD_HEIGHT, 0.0) * Scale(HEAD_WIDTH, HEAD_HEIGHT, HEAD_DEPTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void left_upper_arm()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * UPPER_ARM_HEIGHT, 0.0) * Scale(UPPER_ARM_WIDTH, UPPER_ARM_HEIGHT, UPPER_ARM_WIDTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void left_lower_arm()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * LOWER_ARM_HEIGHT, 0.0) * Scale(LOWER_ARM_WIDTH, LOWER_ARM_HEIGHT, LOWER_ARM_WIDTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void right_upper_arm()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * UPPER_ARM_HEIGHT, 0.0) * Scale(UPPER_ARM_WIDTH, UPPER_ARM_HEIGHT, UPPER_ARM_WIDTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void right_lower_arm()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * LOWER_ARM_HEIGHT, 0.0) * Scale(LOWER_ARM_WIDTH, LOWER_ARM_HEIGHT, LOWER_ARM_WIDTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void left_upper_leg()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * UPPER_LEG_HEIGHT, 0.0) * Scale(UPPER_LEG_WIDTH, UPPER_LEG_HEIGHT, UPPER_LEG_WIDTH));
+
+    glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.65f, 0.65f, 0.65f));
+    glm::mat4 translate = glm::translate(glm::mat4(0.1f), glm::vec3(0, -1, 0));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void left_lower_leg()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * LOWER_LEG_HEIGHT, 0.0) * Scale(LOWER_LEG_WIDTH, LOWER_LEG_HEIGHT, LOWER_LEG_WIDTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void right_upper_leg()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * UPPER_LEG_HEIGHT, 0.0) * Scale(UPPER_LEG_WIDTH, UPPER_LEG_HEIGHT, UPPER_LEG_WIDTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+void right_lower_leg()
+{
+    mvstack.push(base_model);
+
+    mat4 instance = (Translate(0.0, 0.5 * LOWER_LEG_HEIGHT, 0.0) * Scale(LOWER_LEG_WIDTH, LOWER_LEG_HEIGHT, LOWER_LEG_WIDTH));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
+    glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
+    base_model = mvstack.pop();
+}
+
+
+//----------------------------------------------------------------------------
+
+void initNodes(void)
+{
+    mat4  m;
+
+    m = RotateY(theta[Torso]);
+    nodes[Torso] = Node(m, torso, NULL, &nodes[Neck]);
+
+    m = Translate(TORSO_WIDTH / 2 - NECK_WIDTH / 2, TORSO_HEIGHT, 0.0) * RotateZ(theta[Neck]);
+    nodes[Neck] = Node(m, neck, &nodes[LeftUpperArm], &nodes[Head]);
+
+    m = Translate(0.0, NECK_HEIGHT, 0.0) * RotateZ(theta[Head]);
+    nodes[Head] = Node(m, head, NULL, NULL);
+
+    m = Translate(TORSO_WIDTH / 2 - UPPER_LEG_WIDTH / 2, 0.1*UPPER_LEG_HEIGHT, -1.5 + UPPER_LEG_WIDTH / 2) * RotateZ(theta[LeftUpperArm]);
+    nodes[LeftUpperArm] = Node(m, left_upper_arm, &nodes[RightUpperArm], &nodes[LeftLowerArm]);
+
+    m = Translate(TORSO_WIDTH / 2 - UPPER_LEG_WIDTH / 2, 0.1*UPPER_ARM_HEIGHT, 1.5 - UPPER_ARM_WIDTH / 2) * RotateZ(theta[RightUpperArm]);
+    nodes[RightUpperArm] = Node(m, right_upper_arm, &nodes[LeftUpperLeg], &nodes[RightLowerArm]);
+
+    m = Translate(-(TORSO_WIDTH / 2 - UPPER_ARM_WIDTH / 2), 0.1*UPPER_ARM_HEIGHT, -1.5 + UPPER_ARM_WIDTH / 2) * RotateZ(theta[LeftUpperLeg]);
+    nodes[LeftUpperLeg] = Node(m, left_upper_leg, &nodes[RightUpperLeg], &nodes[LeftLowerLeg]);
+
+    m = Translate(-(TORSO_WIDTH / 2 - UPPER_LEG_WIDTH / 2), 0.1*UPPER_LEG_HEIGHT, 1.5 - UPPER_LEG_WIDTH / 2) * RotateZ(theta[RightUpperLeg]);
+    nodes[RightUpperLeg] = Node(m, right_upper_leg, NULL, &nodes[RightLowerLeg]);
+
+    m = Translate(0.0, UPPER_ARM_HEIGHT, 0.0) * RotateZ(theta[LeftLowerArm]);
+    nodes[LeftLowerArm] = Node(m, left_lower_arm, NULL, NULL);
+
+    m = Translate(0.0, UPPER_ARM_HEIGHT, 0.0) * RotateZ(theta[RightLowerArm]);
+    nodes[RightLowerArm] = Node(m, right_lower_arm, NULL, NULL);
+
+    m = Translate(0.0, UPPER_LEG_HEIGHT, 0.0) * RotateZ(theta[LeftLowerLeg]);
+    nodes[LeftLowerLeg] = Node(m, left_lower_leg, NULL, NULL);
+
+    m = Translate(0.0, UPPER_LEG_HEIGHT, 0.0) * RotateZ(theta[RightLowerLeg]);
+    nodes[RightLowerLeg] = Node(m, right_lower_leg, NULL, NULL);
+}
+
+
 
 int main()
 {
@@ -138,6 +473,45 @@ int main()
     Projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 100.0f);
     // Or, for an ortho camera:
     // glm::mat4 Projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f); // In world coordinates
+
+
+    initBaseCube();
+
+    // Initialize tree
+    initNodes();
+
+    theta[Torso] = 50.0;
+    nodes[Torso].transform = RotateY(theta[Torso]);
+
+
+    // Create a vertex array object
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    // Create and initialize a buffer object
+    GLuint buffer[2];
+    glGenBuffers(2, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=0
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, buffer[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=1
+    glEnableVertexAttribArray(1);
+
+    // Load shaders and use the resulting shader program
+    GLuint program = loadShaders("vshader_a9.glsl", "fshader_a9.glsl");
+
+
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+
+    shader_model = glGetUniformLocation(program, "Shader_Model");
+    GLuint Shader_View = glGetUniformLocation(program, "Shader_View");
+    GLuint Shader_Projection = glGetUniformLocation(program, "Shader_Projection");
 
 
     // render loop
@@ -213,7 +587,7 @@ int main()
         glBindVertexArray(VertexArrayID[1]);
         glUseProgram(axis_shader);
         glm::mat4 c_mvp = Projection * View * Model;
-        glUniformMatrix4fv(axis_mvp, 1, GL_FALSE, &c_mvp[0][0]);
+        glUniformMatrix4fv(axis_mvp, 1, GL_FALSE, glm::value_ptr(c_mvp));
 
         glEnable(GL_LINE_SMOOTH);
 
@@ -222,6 +596,12 @@ int main()
         glDrawArrays(GL_LINES, 6, 3*2);
         glDrawArrays(GL_LINES, 12, 3*2);
         glLineWidth(0.5f);
+
+        glBindVertexArray(vao);
+        glUseProgram(program);
+        glUniformMatrix4fv(Shader_View, 1, GL_TRUE, glm::value_ptr(View));
+        glUniformMatrix4fv(Shader_Projection, 1, GL_TRUE, glm::value_ptr(Projection));
+        traverse(&nodes[Torso]);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
