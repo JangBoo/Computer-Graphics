@@ -27,7 +27,7 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 // timing
-float deltaTime = 0.0f;	
+float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 // lighting
@@ -77,8 +77,8 @@ int main()
 
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader lightingShader("2.2.basic_lighting.vs", "2.2.basic_lighting.fs");
-    Shader lampShader("2.2.lamp.vs", "2.2.lamp.fs");
+    Shader lightingShader("shaders/2.2.basic_lighting.vs", "shaders/2.2.basic_lighting.fs");
+    Shader lampShader("shaders/2.2.lamp.vs", "shaders/2.2.lamp.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -247,7 +247,7 @@ void processInput(GLFWwindow *window)
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and 
+    // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }
