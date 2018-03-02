@@ -22,8 +22,7 @@ void main()
 
 	float specularStrength = 0.5;
 	vec3 viewDir = normalize(viewPos - fpo);
-	//vec3 viewDir = normalize(vec3(0,0,0)-fpo);
-	vec3 reflectDir = reflect(-ld, n);
+	vec3 reflectDir = normalize(reflect(-ld, n));
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
 	vec3 specular = specularStrength* spec*light_color;
 	
