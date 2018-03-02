@@ -15,13 +15,13 @@
 typedef Angel::vec4 point4;
 typedef Angel::vec4 color4;
 
-const int NumVertices = 36;	//(6 faces)(2 triangles/face)(3 vertices/triangle)
-
+// 36 vertices for a cube: (6 faces)(2 triangles/face)(3 vertices/triangle)
+const int NumVertices = 36;
 
 point4 points[NumVertices];
 vec3   normals[NumVertices];
 
-// base cube
+// eight points of a base cube
 point4 vertices[8] =
 {
     point4(-0.5, -0.5, 0.5, 1.0),
@@ -61,8 +61,7 @@ GLuint       ModelView, Projection;
 int Index = 0;
 
 // Joint angles with initial values
-GLfloat
-theta[NumNodes] =
+GLfloat theta[NumNodes] =
 {
     0.0,	// Torso
     -80.0,	// Head
@@ -77,8 +76,7 @@ theta[NumNodes] =
     -45.0	// Neck
 };
 
-GLfloat
-target[NumNodes] =
+GLfloat target[NumNodes] =
 {
     0.0,	// Torso
     0.0,	// Head
@@ -97,13 +95,12 @@ GLint angle = Torso;
 
 //----------------------------------------------------------------------------
 
-Node  nodes[NumNodes];
+Node nodes[NumNodes];
 
 //----------------------------------------------------------------------------
 
 // color the cube
-void
-quad(int a, int b, int c, int d)
+void quad(int a, int b, int c, int d)
 {
     // Initialize temporary vectors along the quad's edge to
     // Compute its face normal
@@ -411,7 +408,7 @@ int main()
         return -1;
     }
 
-   // configure global opengl state
+    // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -455,46 +452,46 @@ int main()
     Projection = glGetUniformLocation(program, "Projection");
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-/*
+    /*
 
-glm::vec3 c_pos = glm::vec3(0, 0, 200); // camera position
-glm::vec3 c_dir = glm::vec3(0.0f, 0.0f, 0.0f); // camera direction
-glm::vec3 c_up = glm::vec3(0, 1, 0); // tell the camera which way is 'up'
-glm::mat4 View = glm::lookAt(c_pos, c_dir, c_up);
-float fov=45.0f;//perspective angle
-glm::mat4 projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 300.0f);
+    glm::vec3 c_pos = glm::vec3(0, 0, 200); // camera position
+    glm::vec3 c_dir = glm::vec3(0.0f, 0.0f, 0.0f); // camera direction
+    glm::vec3 c_up = glm::vec3(0, 1, 0); // tell the camera which way is 'up'
+    glm::mat4 View = glm::lookAt(c_pos, c_dir, c_up);
+    float fov=45.0f;//perspective angle
+    glm::mat4 projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 300.0f);
 
-   GLuint MVP = glGetUniformLocation(program, "Shader_View");
-   glUniformMatrix4fv(MVP, 1, GL_TRUE, &View[0][0]);
-*/
+       GLuint MVP = glGetUniformLocation(program, "Shader_View");
+       glUniformMatrix4fv(MVP, 1, GL_TRUE, &View[0][0]);
+    */
 
 
     while (!glfwWindowShouldClose(window))
     {
-         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//glUniformMatrix4fv(Projection, 1, GL_TRUE, &projection[0][0]);
+        //glUniformMatrix4fv(Projection, 1, GL_TRUE, &projection[0][0]);
 
 
-	GLfloat left = -10.0, right = 10.0;
-	GLfloat bottom = -10.0, top = 10.0;
-	GLfloat zNear = -10.0, zFar = 10.0;
+        GLfloat left = -10.0, right = 10.0;
+        GLfloat bottom = -10.0, top = 10.0;
+        GLfloat zNear = -10.0, zFar = 10.0;
 
-	GLfloat aspect = GLfloat(WIDTH) / HEIGHT;
+        GLfloat aspect = GLfloat(WIDTH) / HEIGHT;
 
-	if (aspect > 1.0)
-	{
-		left *= aspect;
-		right *= aspect;
-	}
-	else
-	{
-		bottom /= aspect;
-		top /= aspect;
-	}
+        if (aspect > 1.0)
+        {
+            left *= aspect;
+            right *= aspect;
+        }
+        else
+        {
+            bottom /= aspect;
+            top /= aspect;
+        }
 
-	mat4 projection = Ortho(left, right, bottom, top, zNear, zFar);
-	glUniformMatrix4fv(Projection, 1, GL_TRUE, projection);
+        mat4 projection = Ortho(left, right, bottom, top, zNear, zFar);
+        glUniformMatrix4fv(Projection, 1, GL_TRUE, projection);
 
 
 
