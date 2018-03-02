@@ -35,7 +35,7 @@ const int gridZ = 50;
 
 GLFWwindow* window;
 
-glm::mat4 Model = glm::mat4(1.f);
+glm::mat4 Model;
 glm::mat4 View;
 glm::mat4 Projection;
 

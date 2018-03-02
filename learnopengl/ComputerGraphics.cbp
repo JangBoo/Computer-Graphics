@@ -47,7 +47,7 @@
 			<Add directory="lib" />
 		</Linker>
 		<Unit filename="configuration/root_directory.h" />
-		<Unit filename="src/1.getting_started/7.1.camera_circle/camera_circle.cpp" />
+		<Unit filename="src/2.lighting/2.2.basic_lighting_specular/basic_lighting_specular.cpp" />
 		<Unit filename="src/glad.c">
 			<Option compilerVar="CC" />
 		</Unit>

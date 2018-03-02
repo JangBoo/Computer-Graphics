@@ -19,7 +19,7 @@ typedef Angel::vec4 color4;
 const int NumVertices = 36;
 
 point4 points[NumVertices];
-vec3   normals[NumVertices];
+vec3 normals[NumVertices];
 
 // eight points of a base cube
 point4 vertices[8] =
@@ -55,10 +55,8 @@ enum
 };
 
 MatrixStack  mvstack;
-mat4         model_view;
-GLuint       ModelView, Projection;
-
-int Index = 0;
+mat4         base_model;
+GLuint       shader_model;
 
 // Joint angles with initial values
 GLfloat theta[NumNodes] =
@@ -99,37 +97,36 @@ Node nodes[NumNodes];
 
 //----------------------------------------------------------------------------
 
-// color the cube
+int tmp_index = 0;
+// given a face, initialize four points (two triangles) of it and their normals.
 void quad(int a, int b, int c, int d)
 {
-    // Initialize temporary vectors along the quad's edge to
-    // Compute its face normal
     vec4 u = vertices[b] - vertices[a];
     vec4 v = vertices[c] - vertices[b];
 
     vec3 normal = normalize(cross(u, v));
-    normals[Index] = normal;
-    points[Index] = vertices[a];
-    Index++;
-    normals[Index] = normal;
-    points[Index] = vertices[b];
-    Index++;
-    normals[Index] = normal;
-    points[Index] = vertices[c];
-    Index++;
-    normals[Index] = normal;
-    points[Index] = vertices[a];
-    Index++;
-    normals[Index] = normal;
-    points[Index] = vertices[c];
-    Index++;
-    normals[Index] = normal;
-    points[Index] = vertices[d];
-    Index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[a];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[b];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[c];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[a];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[c];
+    tmp_index++;
+    normals[tmp_index] = normal;
+    points[tmp_index] = vertices[d];
+    tmp_index++;
 }
 
-void
-colorcube(void)
+// initialize the base cube and all the normals
+void initBaseCube(void)
 {
     quad(1, 0, 3, 2);
     quad(2, 3, 7, 6);
@@ -141,17 +138,16 @@ colorcube(void)
 
 //----------------------------------------------------------------------------
 
-void
-traverse(Node* node)
+void traverse(Node* node)
 {
     if (node == NULL)
     {
         return;
     }
 
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
-    model_view *= node->transform;
+    base_model *= node->transform;
     node->render();
 
     if (node->child)
@@ -159,7 +155,7 @@ traverse(Node* node)
         traverse(node->child);
     }
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 
     if (node->sibling)
     {
@@ -169,154 +165,145 @@ traverse(Node* node)
 
 //----------------------------------------------------------------------------
 
-void
-torso()
+void torso()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * TORSO_HEIGHT, 0.0) * Scale(TORSO_WIDTH, TORSO_HEIGHT, TORSO_DEPTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-neck()
+void neck()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * NECK_HEIGHT, 0.0) * Scale(NECK_WIDTH, NECK_HEIGHT, NECK_DEPTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-head()
+void head()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * HEAD_HEIGHT, 0.0) * Scale(HEAD_WIDTH, HEAD_HEIGHT, HEAD_DEPTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-left_upper_arm()
+void left_upper_arm()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * UPPER_ARM_HEIGHT, 0.0) * Scale(UPPER_ARM_WIDTH, UPPER_ARM_HEIGHT, UPPER_ARM_WIDTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-left_lower_arm()
+void left_lower_arm()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * LOWER_ARM_HEIGHT, 0.0) * Scale(LOWER_ARM_WIDTH, LOWER_ARM_HEIGHT, LOWER_ARM_WIDTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-right_upper_arm()
+void right_upper_arm()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * UPPER_ARM_HEIGHT, 0.0) * Scale(UPPER_ARM_WIDTH, UPPER_ARM_HEIGHT, UPPER_ARM_WIDTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-right_lower_arm()
+void right_lower_arm()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * LOWER_ARM_HEIGHT, 0.0) * Scale(LOWER_ARM_WIDTH, LOWER_ARM_HEIGHT, LOWER_ARM_WIDTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-left_upper_leg()
+void left_upper_leg()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * UPPER_LEG_HEIGHT, 0.0) * Scale(UPPER_LEG_WIDTH, UPPER_LEG_HEIGHT, UPPER_LEG_WIDTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.65f, 0.65f, 0.65f));
+    glm::mat4 translate = glm::translate(glm::mat4(0.1f), glm::vec3(0, -1, 0));
+
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-left_lower_leg()
+void left_lower_leg()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * LOWER_LEG_HEIGHT, 0.0) * Scale(LOWER_LEG_WIDTH, LOWER_LEG_HEIGHT, LOWER_LEG_WIDTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-right_upper_leg()
+void right_upper_leg()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * UPPER_LEG_HEIGHT, 0.0) * Scale(UPPER_LEG_WIDTH, UPPER_LEG_HEIGHT, UPPER_LEG_WIDTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
-void
-right_lower_leg()
+void right_lower_leg()
 {
-    mvstack.push(model_view);
+    mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * LOWER_LEG_HEIGHT, 0.0) * Scale(LOWER_LEG_WIDTH, LOWER_LEG_HEIGHT, LOWER_LEG_WIDTH));
 
-    glUniformMatrix4fv(ModelView, 1, GL_TRUE, model_view * instance);
+    glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
-    model_view = mvstack.pop();
+    base_model = mvstack.pop();
 }
 
 
 //----------------------------------------------------------------------------
 
-void
-initNodes(void)
+void initNodes(void)
 {
     mat4  m;
 
@@ -412,7 +399,8 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-    colorcube();
+
+    initBaseCube();
 
     // Initialize tree
     initNodes();
@@ -420,80 +408,48 @@ int main()
     theta[Torso] = 50.0;
     nodes[Torso].transform = RotateY(theta[Torso]);
 
-
-
     // Create a vertex array object
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
     // Create and initialize a buffer object
-    GLuint buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(points)+sizeof(normals), NULL, GL_DYNAMIC_DRAW);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(points), points);
-    glBufferSubData(GL_ARRAY_BUFFER, sizeof(points), sizeof(normals), normals);
+    GLuint buffer[2];
+    glGenBuffers(2, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=0
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, buffer[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=1
+    glEnableVertexAttribArray(1);
 
     // Load shaders and use the resulting shader program
     GLuint program = InitShader("vshader_a9.glsl", "fshader_a9.glsl");
     glUseProgram(program);
 
-    GLuint vPosition = glGetAttribLocation(program, "vPosition");
-    glEnableVertexAttribArray(vPosition);
-    glVertexAttribPointer(vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
-
-    GLuint vNormal = glGetAttribLocation(program, "vNormal");
-    glEnableVertexAttribArray(vNormal);
-    glVertexAttribPointer(vNormal, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(points)));
-
-
-    ModelView = glGetUniformLocation(program, "ModelView");
-    Projection = glGetUniformLocation(program, "Projection");
-
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    /*
 
-    glm::vec3 c_pos = glm::vec3(0, 0, 200); // camera position
+
+    shader_model = glGetUniformLocation(program, "Shader_Model");
+
+    glm::vec3 c_pos = glm::vec3(0, 5, 20); // camera position
     glm::vec3 c_dir = glm::vec3(0.0f, 0.0f, 0.0f); // camera direction
     glm::vec3 c_up = glm::vec3(0, 1, 0); // tell the camera which way is 'up'
     glm::mat4 View = glm::lookAt(c_pos, c_dir, c_up);
+    GLuint Shader_View = glGetUniformLocation(program, "Shader_View");
+    glUniformMatrix4fv(Shader_View, 1, GL_TRUE, glm::value_ptr(View));
+
     float fov=45.0f;//perspective angle
-    glm::mat4 projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 300.0f);
-
-       GLuint MVP = glGetUniformLocation(program, "Shader_View");
-       glUniformMatrix4fv(MVP, 1, GL_TRUE, &View[0][0]);
-    */
-
+    glm::mat4 Projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 300.0f);
+    GLuint Shader_Projection = glGetUniformLocation(program, "Shader_Projection");
+    glUniformMatrix4fv(Shader_Projection, 1, GL_TRUE, glm::value_ptr(Projection));
 
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        //glUniformMatrix4fv(Projection, 1, GL_TRUE, &projection[0][0]);
-
-
-        GLfloat left = -10.0, right = 10.0;
-        GLfloat bottom = -10.0, top = 10.0;
-        GLfloat zNear = -10.0, zFar = 10.0;
-
-        GLfloat aspect = GLfloat(WIDTH) / HEIGHT;
-
-        if (aspect > 1.0)
-        {
-            left *= aspect;
-            right *= aspect;
-        }
-        else
-        {
-            bottom /= aspect;
-            top /= aspect;
-        }
-
-        mat4 projection = Ortho(left, right, bottom, top, zNear, zFar);
-        glUniformMatrix4fv(Projection, 1, GL_TRUE, projection);
-
-
 
         traverse(&nodes[Torso]);
 
