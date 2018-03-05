@@ -21,7 +21,7 @@
 #include "Horse.h"
 
 const std::string TITLE = "RobotHorse";
-const unsigned int WIDTH=800, HEIGHT=800;
+unsigned int WIDTH=800, HEIGHT=800;
 
 const std::string grid_vs = "shaders/grid.vs";
 const std::string grid_fs = "shaders/grid.fs";
@@ -44,26 +44,21 @@ glm::mat4 Projection;
 float base_x = 0.0;
 float base_y = 0.0;
 float base_z = 0.0;
-float base_scale = 1.0;
 
 // ---- VIEW MATRIX global variables -----
 float c_rotate_xz = 0.0f;
 float c_rotate_y = 10.0f;
-glm::vec3 c_pos = glm::vec3(sin(c_rotate_xz) * 20, c_rotate_y, cos(c_rotate_xz) * 20); // camera position
+float c_position_x = 20.0f;
+float c_position_y = 1.0f;
+float c_position_z = 20.0f;
+glm::vec3 c_pos = glm::vec3(sin(c_rotate_xz) * c_position_x, c_rotate_y * c_position_y, cos(c_rotate_xz) * c_position_z); // camera position
 glm::vec3 c_dir = glm::vec3(0.0f, 0.0f, 0.0f); // camera direction
 glm::vec3 c_up = glm::vec3(0, 1, 0); // tell the camera which way is 'up'
-
-float moveOnX=0,moveOnZ=0;
-const float RANGE_MIN=-45.0f,RANGE_MAX=45.0f;
-float scaler=1.0f;
-float rotater=0.0f;
-glm::vec3 rotateOrientation=glm::vec3(0.0f,1.0f,0.0f);
-
 //camera attributes
 float yaw=-90.0f;
 float pitch=0.0f;
-float lastX=WIDTH/2.0f;
-float lastY=HEIGHT/2.0f;
+float lastX;
+float lastY;
 float fov=45.0f;//perspective angle
 bool leftMouseButton=false, middleMouseButton=false, rightMouseButton=false;//varibles for detecting the mouse button action
 bool firstMouse=true;
@@ -124,6 +119,10 @@ MatrixStack  mvstack;
 mat4         base_model;
 GLuint       shader_model;
 GLuint       horse_color;
+
+double rotateX = 0.0;
+double rotateY = 0.0;
+double rotateZ = 0.0;
 
 // Joint angles with initial values
 GLfloat theta[NumNodes] =
@@ -376,7 +375,7 @@ void initNodes(void)
 {
     mat4  m;
 
-    m = Translate(base_x, base_y + 1.9*TORSO_HEIGHT, base_z) * RotateY(theta[Torso]) * Scale(base_scale, base_scale, base_scale);
+    m = Translate(base_x, base_y + 1.9*TORSO_HEIGHT, base_z) * RotateX(rotateX) * RotateY(rotateY) * RotateZ(rotateZ);
     nodes[Torso] = Node(m, torso, NULL, &nodes[Neck]);
 
     m = Translate(-(TORSO_WIDTH / 2 - NECK_WIDTH / 2), TORSO_HEIGHT, 0.0) * RotateZ(theta[Neck]);
@@ -492,16 +491,6 @@ int main()
     // Model matrix: an identity matrix (model will be at the origin)
     Model = glm::mat4(1.0f);
 
-    // Projection matrix: 45 Field of View, ration of "1024/768", dispaly range: 0.1 unit <-> 100 units
-    Projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 100.0f);
-    // Or, for an ortho camera:
-    // glm::mat4 Projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f); // In world coordinates
-
-
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-    // render loop
-    // -----------
     while (!glfwWindowShouldClose(window))
     {
 
@@ -510,18 +499,14 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        /*
-        By default, all client-side capabilities are disabled, including all generic vertex attribute arrays.
-        If enabled, the values in the generic vertex attribute array will be accessed and used for rendering when calls are made to vertex array commands such as
-        glDrawArrays, glDrawElements, glDrawRangeElements, glMultiDrawElements, or glMultiDrawArrays.
-        */
-        glEnableVertexAttribArray(0);
-        glBindVertexArray(vertexArray_grid);
-        glUseProgram(shader_grid);
+        c_pos = glm::vec3(sin(c_rotate_xz) * c_position_x, c_rotate_y * c_position_y, cos(c_rotate_xz) * c_position_z); // camera position
 
-        c_pos = glm::vec3(sin(c_rotate_xz) * 20, c_rotate_y, cos(c_rotate_xz) * 20); // camera position
         // Camera matrix
         View = glm::lookAt(c_pos, c_dir, c_up);
+
+        // Projection matrix: 45 Field of View, ration of "1024/768", dispaly range: 0.1 unit <-> 100 units
+        Projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 100.0f);
+
         // Our ModelViewProjection: multiplication of our 3 matrices
         glm::mat4 MVP = Projection * View * Model;
 
@@ -531,6 +516,14 @@ int main()
         //      Draw a square, then translate it                //
         //                                                      //
         //////////////////////////////////////////////////////////
+        /*
+        By default, all client-side capabilities are disabled, including all generic vertex attribute arrays.
+        If enabled, the values in the generic vertex attribute array will be accessed and used for rendering when calls are made to vertex array commands such as
+        glDrawArrays, glDrawElements, glDrawRangeElements, glMultiDrawElements, or glMultiDrawArrays.
+        */
+        glEnableVertexAttribArray(0);
+        glBindVertexArray(vertexArray_grid);
+        glUseProgram(shader_grid);
         for(int i=1; i<=gridX; ++i)
         {
             glm::mat4 anchor_x1 = MVP * glm::translate(glm::mat4(1.0f), glm::vec3(i-1, 0.f, 0.f));
@@ -667,12 +660,14 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void window_size_callback(GLFWwindow* window, int width, int height)
 {
-    Projection = glm::perspective(fov, (float)width/(float)height, 0.1f, 100.0f);
+    WIDTH = width;
+    HEIGHT = height;
     glViewport(0, 0, width, height);
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
+    //Pressing the spacebar should re-position the horse at a random location on the grid
     if(key == GLFW_KEY_SPACE && action == GLFW_PRESS)
     {
         if(getRandomBool())
@@ -686,32 +681,74 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             base_z = -getRandomFromRange();
         }
     }
-    else if (key == GLFW_KEY_U)
+    //pressing ‘U’ for scale-up and ‘J’ for scale-down
+    else if (key == GLFW_KEY_U && action == GLFW_PRESS)
     {
-        if(action == GLFW_PRESS)
+        base_scale += 0.1f;
+        updateBaseDimensions();
+
+    }
+    else if (key == GLFW_KEY_J && action == GLFW_PRESS)
+    {
+        if(base_scale >= 0.1)
         {
-            base_scale += 0.1f;
+            base_scale -= 0.1f;
         }
-        else if(action == GLFW_REPEAT)
+        updateBaseDimensions();
+    }
+    //A ​ → move left 1 grid unit,
+    //D → move right 1 grid unit,
+    //W → move up 1 grid unit,
+    //S → move down 1 grid unit
+    //a ​ → rotate left 5 degrees about Y axis,
+    //d → rotate right 5 degrees about Y axis,
+    //w → rotate upwards 5 degrees raising the front legs,
+    //s → rotate downwards 5 degrees raising the hind legs.
+    else if(key == GLFW_KEY_A && action == GLFW_PRESS)
+    {
+        if(mode == GLFW_MOD_SHIFT)
         {
-            base_scale += 0.05f;
+            --base_x;
+        }
+        else
+        {
+            rotateY +=5;
         }
     }
-    else if (key == GLFW_KEY_J)
+    else if(key == GLFW_KEY_D && action == GLFW_PRESS)
     {
-        if(action == GLFW_PRESS)
+        if(mode == GLFW_MOD_SHIFT)
         {
-            if(base_scale >= 0.1){
-                base_scale -= 0.1f;
-            }
+            ++base_x;
         }
-        else if(action == GLFW_REPEAT)
+        else
         {
-            if(base_scale >= 0.1){
-                base_scale -= 0.05f;
-            }
+            rotateY -=5;
         }
     }
+    else if(key == GLFW_KEY_W && action == GLFW_PRESS)
+    {
+        if(mode == GLFW_MOD_SHIFT)
+        {
+            ++base_y;
+        }
+        else
+        {
+            rotateZ +=5;
+        }
+    }
+    else if(key == GLFW_KEY_S && action == GLFW_PRESS)
+    {
+        if(base_y >= 1.0f && mode == GLFW_MOD_SHIFT)
+        {
+            --base_y;
+        }
+        else
+        {
+            rotateZ -=5;
+        }
+    }
+    //The world orientation
     else if (key == GLFW_KEY_LEFT)
     {
         if(action == GLFW_PRESS)
@@ -760,40 +797,129 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             c_rotate_y -= 0.05f;
         }
     }
-    else if(key == GLFW_KEY_A)
+    //Pressing the “Home” button should reset to the initial world position and orientation
+    else if(key == GLFW_KEY_HOME && action == GLFW_PRESS)
     {
-        if(action == GLFW_PRESS)
-        {
-            --base_x;
-
-        }
-        else if(action == GLFW_REPEAT)
-        {
-            base_x -= 0.1f;
-        }
+        base_x = 0.0;
+        base_y = 0.0;
+        base_z = 0.0;
+        base_scale = 1.0;
+        rotateX = 0.0;
+        rotateY = 0.0;
+        rotateZ = 0.0;
+        c_rotate_xz = 0.0;
+        c_rotate_y = 10.0f;
+        c_position_x = 20.0f;
+        c_position_y = 1.0f;
+        c_position_z = 20.0f;
     }
-    else if(key == GLFW_KEY_D)
+    //rendering mode
+    //‘P’ for points, key ‘L’ for lines, key ‘T’ for triangles
+    else if(key == GLFW_KEY_P && action == GLFW_PRESS)
     {
-        if(action == GLFW_PRESS)
-        {
-            ++base_x;
-        }
-        else if(action == GLFW_REPEAT)
-        {
-            base_x += 0.1f;
-        }
+        glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+    }
+    else if(key == GLFW_KEY_L && action == GLFW_PRESS)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    else if(key == GLFW_KEY_T && action == GLFW_PRESS)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 }
 
-void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+void cursor_position_callback(GLFWwindow* window, double xPos, double yPos)
 {
+    if(firstMouse)
+    {
+        lastX=xPos;
+        lastY=yPos;
+        firstMouse=false;
+        return;
+    }
+
+    float xOffset=xPos-lastX;
+    float yOffset=lastY-yPos;
+    lastX=xPos;
+    lastY=yPos;
+
+    xOffset*=0.5f;
+    yOffset*=0.5f;
+
+    //while right button is pressed → use mouse movement in x direction to pan
+    if(rightMouseButton)//yaw
+    {
+        yaw+=xOffset;
+    }
+    //while middle button is pressed → use mouse movement in y direction to tilt.
+    if(middleMouseButton)//pitch
+    {
+        pitch+=yOffset;
+        if(pitch>89.0f)
+        {
+            pitch=89.0f;
+        }
+        if(pitch<-89.0f)
+        {
+            pitch=-89.0f;
+        }
+    }
+    //while left button is pressed use mouse movement to move into/out of the scene
+    if(leftMouseButton)//zoom in and out by adjusting the fov degree
+    {
+        if(fov>=1.0f&&fov<=45.0f)
+            fov-=yOffset*0.1;
+        if(fov<=1.0f)
+            fov=1.0f;
+        if(fov>=45.0f)
+            fov=45.0f;
+
+    }
+
+    if(rightMouseButton || middleMouseButton){
+        glm::vec3 front;
+        front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+        front.y = sin(glm::radians(pitch));
+        front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+        c_dir = glm::normalize(front);
+    }
 }
 
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+void mouse_button_callback(GLFWwindow* window, int key, int action, int mods)
 {
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+    if(key==GLFW_MOUSE_BUTTON_RIGHT)
     {
-        c_rotate_xz += 0.1f;
+        if(action == GLFW_PRESS)
+        {
+            rightMouseButton=true;
+        }
+        else if(action == GLFW_RELEASE)
+        {
+            rightMouseButton=false;
+        }
+    }
+    else if(key==GLFW_MOUSE_BUTTON_MIDDLE)
+    {
+        if(action == GLFW_PRESS)
+        {
+            middleMouseButton=true;
+        }
+        else if(action == GLFW_RELEASE)
+        {
+            middleMouseButton=false;
+        }
+    }
+    else if(key==GLFW_MOUSE_BUTTON_LEFT)
+    {
+        if(action == GLFW_PRESS)
+        {
+            leftMouseButton=true;
+        }
+        else if(action == GLFW_RELEASE)
+        {
+            leftMouseButton=false;
+        }
     }
 }
 
@@ -803,7 +929,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int getRandomFromRange()
 {
-    return rand() % 40 + 1;
+    return rand() % gridX + 1;
 }
 
 bool getRandomBool()
