@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 #include <GL/glew.h>	    // include GL Extension Wrangler
 #include <GLFW/glfw3.h>     // include GLFW helper library
@@ -20,7 +21,7 @@
 #include "Horse.h"
 
 const std::string TITLE = "RobotHorse";
-const unsigned int WIDTH=1920, HEIGHT=1080;
+const unsigned int WIDTH=800, HEIGHT=800;
 
 const std::string grid_vs = "shaders/grid.vs";
 const std::string grid_fs = "shaders/grid.fs";
@@ -28,8 +29,8 @@ const std::string grid_fs = "shaders/grid.fs";
 const std::string axis_vs = "shaders/axis.vs";
 const std::string axis_fs = "shaders/axis.fs";
 
-const std::string horse_vs = "vshader_a9.glsl";
-const std::string horse_fs = "fshader_a9.glsl";
+const std::string horse_vs = "shaders/vshader_a9.glsl";
+const std::string horse_fs = "shaders/fshader_a9.glsl";
 
 const int gridX = 50;
 const int gridZ = 50;
@@ -39,6 +40,11 @@ GLFWwindow* window;
 glm::mat4 Model;
 glm::mat4 View;
 glm::mat4 Projection;
+
+float base_x = 0.0;
+float base_y = 0.0;
+float base_z = 0.0;
+float base_scale = 1.0;
 
 // ---- VIEW MATRIX global variables -----
 float c_rotate_xz = 0.0f;
@@ -69,7 +75,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
+int getRandomFromRange();
+bool getRandomBool();
 
 typedef Angel::vec4 point4;
 typedef Angel::vec4 color4;
@@ -116,21 +123,22 @@ enum
 MatrixStack  mvstack;
 mat4         base_model;
 GLuint       shader_model;
+GLuint       horse_color;
 
 // Joint angles with initial values
 GLfloat theta[NumNodes] =
 {
     0.0,	// Torso
-    -80.0,	// Head
-    180.0,	// LeftUpperArm
-    0.0,	// LeftLowerArm
-    180.0,	// RightUpperArm
-    0.0,	// RightLowerArm
-    170.0,	// LeftUpperLeg
-    10.0,	// LeftLowerLeg
-    170.0,	// RightUpperLeg
-    10.0,	// RightLowerLeg
-    -45.0	// Neck
+    80.0,	// Head
+    190.0,	// LeftUpperArm
+    -10.0,	// LeftLowerArm
+    190.0,	// RightUpperArm
+    -10.0,	// RightLowerArm
+    180.0,	// LeftUpperLeg
+    0.0,	// LeftLowerLeg
+    180.0,	// RightUpperLeg
+    0.0,	// RightLowerLeg
+    45.0	// Neck
 };
 
 GLfloat target[NumNodes] =
@@ -231,7 +239,7 @@ void torso()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * TORSO_HEIGHT, 0.0) * Scale(TORSO_WIDTH, TORSO_HEIGHT, TORSO_DEPTH));
-
+    glUniform4f(horse_color, 0.7f,0.7f,0.7f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -243,7 +251,7 @@ void neck()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * NECK_HEIGHT, 0.0) * Scale(NECK_WIDTH, NECK_HEIGHT, NECK_DEPTH));
-
+    glUniform4f(horse_color, 0.75f,0.75f,0.75f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -255,7 +263,7 @@ void head()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * HEAD_HEIGHT, 0.0) * Scale(HEAD_WIDTH, HEAD_HEIGHT, HEAD_DEPTH));
-
+    glUniform4f(horse_color, 0.65f,0.65f,0.65f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -267,7 +275,7 @@ void left_upper_arm()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * UPPER_ARM_HEIGHT, 0.0) * Scale(UPPER_ARM_WIDTH, UPPER_ARM_HEIGHT, UPPER_ARM_WIDTH));
-
+    glUniform4f(horse_color, 0.6f,0.7f,0.7f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -279,7 +287,7 @@ void left_lower_arm()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * LOWER_ARM_HEIGHT, 0.0) * Scale(LOWER_ARM_WIDTH, LOWER_ARM_HEIGHT, LOWER_ARM_WIDTH));
-
+    glUniform4f(horse_color, 0.7f,0.6f,0.7f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -291,7 +299,7 @@ void right_upper_arm()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * UPPER_ARM_HEIGHT, 0.0) * Scale(UPPER_ARM_WIDTH, UPPER_ARM_HEIGHT, UPPER_ARM_WIDTH));
-
+    glUniform4f(horse_color, 0.6f,0.7f,0.7f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -303,7 +311,7 @@ void right_lower_arm()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * LOWER_ARM_HEIGHT, 0.0) * Scale(LOWER_ARM_WIDTH, LOWER_ARM_HEIGHT, LOWER_ARM_WIDTH));
-
+    glUniform4f(horse_color, 0.7f,0.6f,0.7f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -315,7 +323,7 @@ void left_upper_leg()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * UPPER_LEG_HEIGHT, 0.0) * Scale(UPPER_LEG_WIDTH, UPPER_LEG_HEIGHT, UPPER_LEG_WIDTH));
-
+    glUniform4f(horse_color, 0.6f,0.7f,0.7f,1.0f);
     glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.65f, 0.65f, 0.65f));
     glm::mat4 translate = glm::translate(glm::mat4(0.1f), glm::vec3(0, -1, 0));
 
@@ -330,7 +338,7 @@ void left_lower_leg()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * LOWER_LEG_HEIGHT, 0.0) * Scale(LOWER_LEG_WIDTH, LOWER_LEG_HEIGHT, LOWER_LEG_WIDTH));
-
+    glUniform4f(horse_color, 0.7f,0.6f,0.7f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -342,7 +350,7 @@ void right_upper_leg()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * UPPER_LEG_HEIGHT, 0.0) * Scale(UPPER_LEG_WIDTH, UPPER_LEG_HEIGHT, UPPER_LEG_WIDTH));
-
+    glUniform4f(horse_color, 0.6f,0.7f,0.7f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -354,7 +362,7 @@ void right_lower_leg()
     mvstack.push(base_model);
 
     mat4 instance = (Translate(0.0, 0.5 * LOWER_LEG_HEIGHT, 0.0) * Scale(LOWER_LEG_WIDTH, LOWER_LEG_HEIGHT, LOWER_LEG_WIDTH));
-
+    glUniform4f(horse_color, 0.7f,0.6f,0.7f,1.0f);
     glUniformMatrix4fv(shader_model, 1, GL_TRUE, base_model * instance);
     glDrawArrays(GL_TRIANGLES, 0, NumVertices);
 
@@ -368,10 +376,10 @@ void initNodes(void)
 {
     mat4  m;
 
-    m = Translate(0.0, 1.9*TORSO_HEIGHT, 0.0) * RotateY(theta[Torso]);
+    m = Translate(base_x, base_y + 1.9*TORSO_HEIGHT, base_z) * RotateY(theta[Torso]) * Scale(base_scale, base_scale, base_scale);
     nodes[Torso] = Node(m, torso, NULL, &nodes[Neck]);
 
-    m = Translate(TORSO_WIDTH / 2 - NECK_WIDTH / 2, TORSO_HEIGHT, 0.0) * RotateZ(theta[Neck]);
+    m = Translate(-(TORSO_WIDTH / 2 - NECK_WIDTH / 2), TORSO_HEIGHT, 0.0) * RotateZ(theta[Neck]);
     nodes[Neck] = Node(m, neck, &nodes[LeftUpperArm], &nodes[Head]);
 
     m = Translate(0.0, NECK_HEIGHT, 0.0) * RotateZ(theta[Head]);
@@ -439,6 +447,7 @@ int main()
     shader_model = glGetUniformLocation(shader_horse, "Shader_Model");
     GLuint Shader_View = glGetUniformLocation(shader_horse, "Shader_View");
     GLuint Shader_Projection = glGetUniformLocation(shader_horse, "Shader_Projection");
+    horse_color = glGetUniformLocation(shader_horse, "horse_color");
 
     GLuint vertexArray_grid, vertexBuffer_grid;
     glGenVertexArrays(1, &vertexArray_grid);
@@ -464,12 +473,10 @@ int main()
 
 
     initBaseCube();
-    initNodes();
 
     //theta[Torso] = 50.0;
     //nodes[Torso].transform = RotateY(theta[Torso]);
-
-    GLuint vertexArray_horse, vertexBuffer_horse[2];
+    GLuint vertexArray_horse, vertexBuffer_horse[3];
     glGenVertexArrays(1, &vertexArray_horse);
     glGenBuffers(2, vertexBuffer_horse);
     glBindVertexArray(vertexArray_horse);
@@ -477,11 +484,14 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=0
     glEnableVertexAttribArray(0);
-
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_horse[1]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=1
     glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_horse[2]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_horse), buffer_data_horse, GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=1
+    glEnableVertexAttribArray(2);
 
     // Model matrix: an identity matrix (model will be at the origin)
     Model = glm::mat4(1.0f);
@@ -493,7 +503,6 @@ int main()
 
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 
     // render loop
     // -----------
@@ -578,6 +587,7 @@ int main()
         glDrawArrays(GL_LINES, 12, 3*2);
         glLineWidth(0.5f);
 
+        initNodes();
         glBindVertexArray(vertexArray_horse);
         glUseProgram(shader_horse);
         glUniformMatrix4fv(Shader_View, 1, GL_TRUE, glm::value_ptr(View));
@@ -594,7 +604,7 @@ int main()
     // ------------------------------------------------------------------------
     glDeleteBuffers(1, &vertexBuffer_grid);
     glDeleteBuffers(2, vertexBuffer_axis);
-    glDeleteBuffers(2, vertexBuffer_horse);
+    glDeleteBuffers(3, vertexBuffer_horse);
 
     glDeleteVertexArrays(1, &vertexArray_grid);
     glDeleteVertexArrays(1, &vertexArray_axis);
@@ -667,7 +677,46 @@ void window_size_callback(GLFWwindow* window, int width, int height)
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if (key == GLFW_KEY_LEFT)
+    if(key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+    {
+        if(getRandomBool())
+        {
+            base_x = getRandomFromRange();
+            base_z = getRandomFromRange();
+        }
+        else
+        {
+            base_x = -getRandomFromRange();
+            base_z = -getRandomFromRange();
+        }
+    }
+    else if (key == GLFW_KEY_U)
+    {
+        if(action == GLFW_PRESS)
+        {
+            base_scale += 0.1f;
+        }
+        else if(action == GLFW_REPEAT)
+        {
+            base_scale += 0.05f;
+        }
+    }
+    else if (key == GLFW_KEY_J)
+    {
+        if(action == GLFW_PRESS)
+        {
+            if(base_scale >= 0.1){
+                base_scale -= 0.1f;
+            }
+        }
+        else if(action == GLFW_REPEAT)
+        {
+            if(base_scale >= 0.1){
+                base_scale -= 0.05f;
+            }
+        }
+    }
+    else if (key == GLFW_KEY_LEFT)
     {
         if(action == GLFW_PRESS)
         {
@@ -715,6 +764,29 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             c_rotate_y -= 0.05f;
         }
     }
+    else if(key == GLFW_KEY_A)
+    {
+        if(action == GLFW_PRESS)
+        {
+            --base_x;
+
+        }
+        else if(action == GLFW_REPEAT)
+        {
+            base_x -= 0.1f;
+        }
+    }
+    else if(key == GLFW_KEY_D)
+    {
+        if(action == GLFW_PRESS)
+        {
+            ++base_x;
+        }
+        else if(action == GLFW_REPEAT)
+        {
+            base_x += 0.1f;
+        }
+    }
 }
 
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
@@ -731,4 +803,14 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
+}
+
+int getRandomFromRange()
+{
+    return rand() % 40 + 1;
+}
+
+bool getRandomBool()
+{
+    return (rand() % 2 == 0) ? true:false;
 }
