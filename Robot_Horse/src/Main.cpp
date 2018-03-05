@@ -28,8 +28,8 @@ const std::string grid_fs = "shaders/grid.fs";
 const std::string axis_vs = "shaders/axis.vs";
 const std::string axis_fs = "shaders/axis.fs";
 
-const std::string horse_vs = "shaders/horse.vs";
-const std::string horse_fs = "shaders/horse.fs";
+const std::string horse_vs = "vshader_a9.glsl";
+const std::string horse_fs = "fshader_a9.glsl";
 
 const int gridX = 50;
 const int gridZ = 50;
@@ -368,7 +368,7 @@ void initNodes(void)
 {
     mat4  m;
 
-    m = RotateY(theta[Torso]);
+    m = Translate(0.0, 1.9*TORSO_HEIGHT, 0.0) * RotateY(theta[Torso]);
     nodes[Torso] = Node(m, torso, NULL, &nodes[Neck]);
 
     m = Translate(TORSO_WIDTH / 2 - NECK_WIDTH / 2, TORSO_HEIGHT, 0.0) * RotateZ(theta[Neck]);
@@ -377,16 +377,16 @@ void initNodes(void)
     m = Translate(0.0, NECK_HEIGHT, 0.0) * RotateZ(theta[Head]);
     nodes[Head] = Node(m, head, NULL, NULL);
 
-    m = Translate(TORSO_WIDTH / 2 - UPPER_LEG_WIDTH / 2, 0.1*UPPER_LEG_HEIGHT, -1.5 + UPPER_LEG_WIDTH / 2) * RotateZ(theta[LeftUpperArm]);
+    m = Translate(TORSO_WIDTH / 2 - UPPER_LEG_WIDTH / 2, 0.1*UPPER_LEG_HEIGHT, -TORSO_DEPTH/2 + UPPER_LEG_WIDTH / 2) * RotateZ(theta[LeftUpperArm]);
     nodes[LeftUpperArm] = Node(m, left_upper_arm, &nodes[RightUpperArm], &nodes[LeftLowerArm]);
 
-    m = Translate(TORSO_WIDTH / 2 - UPPER_LEG_WIDTH / 2, 0.1*UPPER_ARM_HEIGHT, 1.5 - UPPER_ARM_WIDTH / 2) * RotateZ(theta[RightUpperArm]);
+    m = Translate(TORSO_WIDTH / 2 - UPPER_LEG_WIDTH / 2, 0.1*UPPER_ARM_HEIGHT, TORSO_DEPTH/2 - UPPER_ARM_WIDTH / 2) * RotateZ(theta[RightUpperArm]);
     nodes[RightUpperArm] = Node(m, right_upper_arm, &nodes[LeftUpperLeg], &nodes[RightLowerArm]);
 
-    m = Translate(-(TORSO_WIDTH / 2 - UPPER_ARM_WIDTH / 2), 0.1*UPPER_ARM_HEIGHT, -1.5 + UPPER_ARM_WIDTH / 2) * RotateZ(theta[LeftUpperLeg]);
+    m = Translate(-(TORSO_WIDTH / 2 - UPPER_ARM_WIDTH / 2), 0.1*UPPER_ARM_HEIGHT, -TORSO_DEPTH/2 + UPPER_ARM_WIDTH / 2) * RotateZ(theta[LeftUpperLeg]);
     nodes[LeftUpperLeg] = Node(m, left_upper_leg, &nodes[RightUpperLeg], &nodes[LeftLowerLeg]);
 
-    m = Translate(-(TORSO_WIDTH / 2 - UPPER_LEG_WIDTH / 2), 0.1*UPPER_LEG_HEIGHT, 1.5 - UPPER_LEG_WIDTH / 2) * RotateZ(theta[RightUpperLeg]);
+    m = Translate(-(TORSO_WIDTH / 2 - UPPER_LEG_WIDTH / 2), 0.1*UPPER_LEG_HEIGHT, TORSO_DEPTH/2 - UPPER_LEG_WIDTH / 2) * RotateZ(theta[RightUpperLeg]);
     nodes[RightUpperLeg] = Node(m, right_upper_leg, NULL, &nodes[RightLowerLeg]);
 
     m = Translate(0.0, UPPER_ARM_HEIGHT, 0.0) * RotateZ(theta[LeftLowerArm]);
@@ -429,42 +429,59 @@ int main()
 
     // build and compile our shader zprogram
     // ------------------------------------
-    GLuint grid_shader = loadShaders(grid_vs, grid_fs);
-    GLuint grid_mvp = glGetUniformLocation(grid_shader, "MVP");
+    GLuint shader_grid = loadShaders(grid_vs, grid_fs);
+    GLuint grid_mvp = glGetUniformLocation(shader_grid, "MVP");
 
-    GLuint axis_shader = loadShaders(axis_vs, axis_fs);
-    GLuint axis_mvp = glGetUniformLocation(axis_shader, "MVP");
+    GLuint shader_axis = loadShaders(axis_vs, axis_fs);
+    GLuint axis_mvp = glGetUniformLocation(shader_axis, "MVP");
 
-    GLuint horse_shader = loadShaders(horse_vs, horse_fs);
-    GLuint horse_mvp = glGetUniformLocation(horse_shader, "MVP");
+    GLuint shader_horse = loadShaders(horse_vs, horse_fs);
+    shader_model = glGetUniformLocation(shader_horse, "Shader_Model");
+    GLuint Shader_View = glGetUniformLocation(shader_horse, "Shader_View");
+    GLuint Shader_Projection = glGetUniformLocation(shader_horse, "Shader_Projection");
 
-
-    GLuint VertexArrayID[3], VertexBufferID[6];
-    glGenVertexArrays(3, VertexArrayID);
-    glGenBuffers(6, VertexBufferID);
-
-    glBindVertexArray(VertexArrayID[0]);
-    glBindBuffer(GL_ARRAY_BUFFER, VertexBufferID[0]);
+    GLuint vertexArray_grid, vertexBuffer_grid;
+    glGenVertexArrays(1, &vertexArray_grid);
+    glGenBuffers(1, &vertexBuffer_grid);
+    glBindVertexArray(vertexArray_grid);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexArray_grid);
     glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_grid), buffer_data_grid, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glEnableVertexAttribArray(0);
 
-    glBindVertexArray(VertexArrayID[1]);
-    glBindBuffer(GL_ARRAY_BUFFER, VertexBufferID[2]);
+    GLuint vertexArray_axis, vertexBuffer_axis[2];
+    glGenVertexArrays(1, &vertexArray_axis);
+    glGenBuffers(2, vertexBuffer_axis);
+    glBindVertexArray(vertexArray_axis);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_axis[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_axis), buffer_data_axis, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, VertexBufferID[3]);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_axis[1]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_axis), buffer_data_axis, GL_STATIC_DRAW);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(3*sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    glBindVertexArray(VertexArrayID[2]);
-    glBindBuffer(GL_ARRAY_BUFFER, VertexBufferID[4]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_horse), buffer_data_horse, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+    initBaseCube();
+    initNodes();
+
+    //theta[Torso] = 50.0;
+    //nodes[Torso].transform = RotateY(theta[Torso]);
+
+    GLuint vertexArray_horse, vertexBuffer_horse[2];
+    glGenVertexArrays(1, &vertexArray_horse);
+    glGenBuffers(2, vertexBuffer_horse);
+    glBindVertexArray(vertexArray_horse);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_horse[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=0
     glEnableVertexAttribArray(0);
 
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_horse[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=1
+    glEnableVertexAttribArray(1);
 
     // Model matrix: an identity matrix (model will be at the origin)
     Model = glm::mat4(1.0f);
@@ -475,43 +492,7 @@ int main()
     // glm::mat4 Projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f); // In world coordinates
 
 
-    initBaseCube();
-
-    // Initialize tree
-    initNodes();
-
-    theta[Torso] = 50.0;
-    nodes[Torso].transform = RotateY(theta[Torso]);
-
-
-    // Create a vertex array object
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    // Create and initialize a buffer object
-    GLuint buffer[2];
-    glGenBuffers(2, buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=0
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, buffer[1]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=1
-    glEnableVertexAttribArray(1);
-
-    // Load shaders and use the resulting shader program
-    GLuint program = loadShaders("vshader_a9.glsl", "fshader_a9.glsl");
-
-
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-
-    shader_model = glGetUniformLocation(program, "Shader_Model");
-    GLuint Shader_View = glGetUniformLocation(program, "Shader_View");
-    GLuint Shader_Projection = glGetUniformLocation(program, "Shader_Projection");
 
 
     // render loop
@@ -530,8 +511,8 @@ int main()
         glDrawArrays, glDrawElements, glDrawRangeElements, glMultiDrawElements, or glMultiDrawArrays.
         */
         glEnableVertexAttribArray(0);
-        glBindVertexArray(VertexArrayID[0]);
-        glUseProgram(grid_shader);
+        glBindVertexArray(vertexArray_grid);
+        glUseProgram(shader_grid);
 
         c_pos = glm::vec3(sin(c_rotate_xz) * 20, c_rotate_y, cos(c_rotate_xz) * 20); // camera position
         // Camera matrix
@@ -584,8 +565,8 @@ int main()
         // Draw X, Y, Z axes                                    //
         //                                                      //
         //////////////////////////////////////////////////////////
-        glBindVertexArray(VertexArrayID[1]);
-        glUseProgram(axis_shader);
+        glBindVertexArray(vertexArray_axis);
+        glUseProgram(shader_axis);
         glm::mat4 c_mvp = Projection * View * Model;
         glUniformMatrix4fv(axis_mvp, 1, GL_FALSE, glm::value_ptr(c_mvp));
 
@@ -597,8 +578,8 @@ int main()
         glDrawArrays(GL_LINES, 12, 3*2);
         glLineWidth(0.5f);
 
-        glBindVertexArray(vao);
-        glUseProgram(program);
+        glBindVertexArray(vertexArray_horse);
+        glUseProgram(shader_horse);
         glUniformMatrix4fv(Shader_View, 1, GL_TRUE, glm::value_ptr(View));
         glUniformMatrix4fv(Shader_Projection, 1, GL_TRUE, glm::value_ptr(Projection));
         traverse(&nodes[Torso]);
@@ -611,19 +592,17 @@ int main()
 
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
-    glDeleteBuffers(1, &VertexBufferID[0]);
-    glDeleteBuffers(1, &VertexBufferID[1]);
-    glDeleteBuffers(1, &VertexBufferID[2]);
-    glDeleteBuffers(1, &VertexBufferID[3]);
-    glDeleteBuffers(1, &VertexBufferID[4]);
-    glDeleteBuffers(1, &VertexBufferID[5]);
-    glDeleteProgram(grid_shader);
-    glDeleteProgram(axis_shader);
-    glDeleteProgram(horse_shader);
-    glDeleteVertexArrays(1, &VertexArrayID[0]);
-    glDeleteVertexArrays(1, &VertexArrayID[1]);
-    glDeleteVertexArrays(1, &VertexArrayID[2]);
+    glDeleteBuffers(1, &vertexBuffer_grid);
+    glDeleteBuffers(2, vertexBuffer_axis);
+    glDeleteBuffers(2, vertexBuffer_horse);
 
+    glDeleteVertexArrays(1, &vertexArray_grid);
+    glDeleteVertexArrays(1, &vertexArray_axis);
+    glDeleteVertexArrays(1, &vertexArray_horse);
+
+    glDeleteProgram(shader_grid);
+    glDeleteProgram(shader_axis);
+    glDeleteProgram(shader_horse);
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     glfwTerminate();
@@ -683,47 +662,69 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void window_size_callback(GLFWwindow* window, int width, int height)
 {
     Projection = glm::perspective(fov, (float)width/(float)height, 0.1f, 100.0f);
-	glViewport(0, 0, width, height);
+    glViewport(0, 0, width, height);
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if (key == GLFW_KEY_LEFT){
-        if(action == GLFW_PRESS){
+    if (key == GLFW_KEY_LEFT)
+    {
+        if(action == GLFW_PRESS)
+        {
             c_rotate_xz -= 0.1f;
-        }else if(action == GLFW_REPEAT){
+        }
+        else if(action == GLFW_REPEAT)
+        {
             c_rotate_xz -= 0.05f;
         }
-    }else if(key == GLFW_KEY_RIGHT){
-        if(action == GLFW_PRESS){
+    }
+    else if(key == GLFW_KEY_RIGHT)
+    {
+        if(action == GLFW_PRESS)
+        {
             c_rotate_xz += 0.1f;
-        }else if(action == GLFW_REPEAT){
+        }
+        else if(action == GLFW_REPEAT)
+        {
             c_rotate_xz += 0.05f;
         }
-    }else if(key == GLFW_KEY_UP){
-        if(action == GLFW_PRESS){
+    }
+    else if(key == GLFW_KEY_UP)
+    {
+        if(action == GLFW_PRESS)
+        {
             c_rotate_y += 0.1f;
-        }else if(action == GLFW_REPEAT){
+        }
+        else if(action == GLFW_REPEAT)
+        {
             c_rotate_y += 0.05f;
         }
-    }else if(key == GLFW_KEY_DOWN){
-        if(c_rotate_y <= 0.0f){
+    }
+    else if(key == GLFW_KEY_DOWN)
+    {
+        if(c_rotate_y <= 0.0f)
+        {
             return;
         }
-        if(action == GLFW_PRESS){
+        if(action == GLFW_PRESS)
+        {
             c_rotate_y -= 0.1f;
-        }else if(action == GLFW_REPEAT){
+        }
+        else if(action == GLFW_REPEAT)
+        {
             c_rotate_y -= 0.05f;
         }
     }
 }
 
-void cursor_position_callback(GLFWwindow* window, double xpos, double ypos){
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+    {
         c_rotate_xz += 0.1f;
     }
 }
