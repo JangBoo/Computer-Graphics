@@ -476,7 +476,7 @@ int main()
 
     //theta[Torso] = 50.0;
     //nodes[Torso].transform = RotateY(theta[Torso]);
-    GLuint vertexArray_horse, vertexBuffer_horse[3];
+    GLuint vertexArray_horse, vertexBuffer_horse[2];
     glGenVertexArrays(1, &vertexArray_horse);
     glGenBuffers(2, vertexBuffer_horse);
     glBindVertexArray(vertexArray_horse);
@@ -488,10 +488,6 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=1
     glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer_horse[2]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data_horse), buffer_data_horse, GL_STATIC_DRAW);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);// vertices shader, layout=1
-    glEnableVertexAttribArray(2);
 
     // Model matrix: an identity matrix (model will be at the origin)
     Model = glm::mat4(1.0f);
@@ -604,7 +600,7 @@ int main()
     // ------------------------------------------------------------------------
     glDeleteBuffers(1, &vertexBuffer_grid);
     glDeleteBuffers(2, vertexBuffer_axis);
-    glDeleteBuffers(3, vertexBuffer_horse);
+    glDeleteBuffers(2, vertexBuffer_horse);
 
     glDeleteVertexArrays(1, &vertexArray_grid);
     glDeleteVertexArrays(1, &vertexArray_axis);
