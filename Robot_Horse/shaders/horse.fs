@@ -1,13 +1,12 @@
 #version 330 core
 
-// Interpolated values from the vertex shaders
-in vec4 fragmentColor;
-
-// Output data
-out vec4 color;
+in  vec4 color;
+out vec4 fColor;
 
 uniform vec4 horse_color;
 
-void main(){
-	color = horse_color;
-}
+void main() 
+{ 
+    fColor = horse_color;
+} 
+

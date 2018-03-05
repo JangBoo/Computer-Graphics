@@ -29,8 +29,8 @@ const std::string grid_fs = "shaders/grid.fs";
 const std::string axis_vs = "shaders/axis.vs";
 const std::string axis_fs = "shaders/axis.fs";
 
-const std::string horse_vs = "shaders/vshader_a9.glsl";
-const std::string horse_fs = "shaders/fshader_a9.glsl";
+const std::string horse_vs = "shaders/horse.vs";
+const std::string horse_fs = "shaders/horse.fs";
 
 const int gridX = 50;
 const int gridZ = 50;
@@ -46,13 +46,15 @@ float base_y = 0.0;
 float base_z = 0.0;
 
 // ---- VIEW MATRIX global variables -----
-float c_rotate_xz = 0.0f;
-float c_rotate_y = 10.0f;
-float c_position_x = 20.0f;
-float c_position_y = 1.0f;
-float c_position_z = 20.0f;
-glm::vec3 c_pos = glm::vec3(sin(c_rotate_xz) * c_position_x, c_rotate_y * c_position_y, cos(c_rotate_xz) * c_position_z); // camera position
-glm::vec3 c_dir = glm::vec3(0.0f, 0.0f, 0.0f); // camera direction
+float c_radius = 80.0f;
+//float c_rotate_x = 0.0f;
+float c_vertical = 0.0f;
+float c_horizontal = 90.0f;
+float c_dir_x = 0.0f;
+float c_dir_y = 0.0f;
+float c_dir_z = 0.0f;
+glm::vec3 c_pos;
+glm::vec3 c_dir; // camera direction
 glm::vec3 c_up = glm::vec3(0, 1, 0); // tell the camera which way is 'up'
 //camera attributes
 float yaw=-90.0f;
@@ -499,13 +501,17 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        c_pos = glm::vec3(sin(c_rotate_xz) * c_position_x, c_rotate_y * c_position_y, cos(c_rotate_xz) * c_position_z); // camera position
+        double c_pos_x = c_radius * glm::cos(glm::radians(c_vertical)) * glm::cos(glm::radians(c_horizontal));
+        double c_pos_y = c_radius * glm::sin(glm::radians(c_vertical));
+        double c_pos_z = c_radius * glm::cos(glm::radians(c_vertical)) * glm::sin(glm::radians(c_horizontal));
+        c_pos = glm::vec3(c_pos_x, c_pos_y, c_pos_z); // camera position
+        c_dir = glm::vec3(c_dir_x, c_dir_y, c_dir_z); // camera direction
 
         // Camera matrix
         View = glm::lookAt(c_pos, c_dir, c_up);
 
-        // Projection matrix: 45 Field of View, ration of "1024/768", dispaly range: 0.1 unit <-> 100 units
-        Projection = glm::perspective(fov, (float)WIDTH/(float)HEIGHT, 0.1f, 100.0f);
+        // Projection matrix: 45 Field of View, ration of "800/600", dispaly range: 0.1 unit <-> 100 units
+        Projection = glm::perspective(glm::radians(fov), (float)WIDTH/(float)HEIGHT, 0.1f, 100.0f);
 
         // Our ModelViewProjection: multiplication of our 3 matrices
         glm::mat4 MVP = Projection * View * Model;
@@ -751,50 +757,40 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     //The world orientation
     else if (key == GLFW_KEY_LEFT)
     {
-        if(action == GLFW_PRESS)
+        if(action == GLFW_PRESS || action == GLFW_REPEAT)
         {
-            c_rotate_xz -= 0.1f;
+            c_horizontal += 1.0f;
         }
-        else if(action == GLFW_REPEAT)
-        {
-            c_rotate_xz -= 0.05f;
-        }
+
     }
     else if(key == GLFW_KEY_RIGHT)
     {
-        if(action == GLFW_PRESS)
+        if(action == GLFW_PRESS || action == GLFW_REPEAT)
         {
-            c_rotate_xz += 0.1f;
-        }
-        else if(action == GLFW_REPEAT)
-        {
-            c_rotate_xz += 0.05f;
+            c_horizontal -= 1.0f;
         }
     }
     else if(key == GLFW_KEY_UP)
     {
-        if(action == GLFW_PRESS)
-        {
-            c_rotate_y += 0.1f;
-        }
-        else if(action == GLFW_REPEAT)
-        {
-            c_rotate_y += 0.05f;
-        }
-    }
-    else if(key == GLFW_KEY_DOWN)
-    {
-        if(c_rotate_y <= 0.0f)
+        if(c_vertical + 1 >= 90)
         {
             return;
         }
-        if(action == GLFW_PRESS)
+        if(action == GLFW_PRESS || action == GLFW_REPEAT)
         {
-            c_rotate_y -= 0.1f;
+            c_vertical += 1.0f;
         }
-        else if(action == GLFW_REPEAT)
+
+    }
+    else if(key == GLFW_KEY_DOWN)
+    {
+        if(c_vertical <= 0)
         {
-            c_rotate_y -= 0.05f;
+            return;
+        }
+        if(action == GLFW_PRESS || action == GLFW_REPEAT)
+        {
+            c_vertical -= 1.0f;
         }
     }
     //Pressing the “Home” button should reset to the initial world position and orientation
@@ -807,11 +803,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         rotateX = 0.0;
         rotateY = 0.0;
         rotateZ = 0.0;
-        c_rotate_xz = 0.0;
-        c_rotate_y = 10.0f;
-        c_position_x = 20.0f;
-        c_position_y = 1.0f;
-        c_position_z = 20.0f;
+        c_vertical = 0.0f;
+        c_horizontal = 90.0f;
+        c_dir_x = 0.0f;
+        c_dir_y = 0.0f;
+        c_dir_z = 0.0f;
+        fov = 45.0f;
     }
     //rendering mode
     //‘P’ for points, key ‘L’ for lines, key ‘T’ for triangles
@@ -844,45 +841,40 @@ void cursor_position_callback(GLFWwindow* window, double xPos, double yPos)
     lastX=xPos;
     lastY=yPos;
 
-    xOffset*=0.5f;
-    yOffset*=0.5f;
-
     //while right button is pressed → use mouse movement in x direction to pan
     if(rightMouseButton)//yaw
     {
-        yaw+=xOffset;
+        if(xOffset > 0)
+        {
+            c_dir_x += 0.1;
+        }
+        else
+        {
+            c_dir_x -= 0.1;
+        }
+
     }
     //while middle button is pressed → use mouse movement in y direction to tilt.
     if(middleMouseButton)//pitch
     {
-        pitch+=yOffset;
-        if(pitch>89.0f)
+        if(yOffset > 0)
         {
-            pitch=89.0f;
+            c_dir_y += 0.1;
         }
-        if(pitch<-89.0f)
+        else
         {
-            pitch=-89.0f;
+            c_dir_y -= 0.1;
         }
     }
     //while left button is pressed use mouse movement to move into/out of the scene
     if(leftMouseButton)//zoom in and out by adjusting the fov degree
     {
-        if(fov>=1.0f&&fov<=45.0f)
-            fov-=yOffset*0.1;
-        if(fov<=1.0f)
-            fov=1.0f;
-        if(fov>=45.0f)
-            fov=45.0f;
-
-    }
-
-    if(rightMouseButton || middleMouseButton){
-        glm::vec3 front;
-        front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-        front.y = sin(glm::radians(pitch));
-        front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-        c_dir = glm::normalize(front);
+        if(fov >= 1.0f && fov <= 45.0f)
+            fov -= 0.1*yOffset;
+        if(fov <= 1.0f)
+            fov = 1.0f;
+        if(fov >= 45.0f)
+            fov = 45.0f;
     }
 }
 
