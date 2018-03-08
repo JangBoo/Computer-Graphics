@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="lab_05" />
+		<Option title="lab_06" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -48,6 +48,7 @@
 		<Unit filename="src/common/stdafx.h" />
 		<Unit filename="src/objloader.cpp" />
 		<Unit filename="src/objloader.hpp" />
+		<Unit filename="src/stb_image.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
