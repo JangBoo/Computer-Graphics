@@ -18,5 +18,3 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
-GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
